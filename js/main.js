@@ -1,5 +1,8 @@
-import { loadConfig } from "./content.js";
+import { loadConfig, loadContent } from "./content.js";
 import { startRouter } from "./router.js";
+import { createStore } from "./storage.js";
+import { pruneRecordings } from "./recordings.js";
+import { toLocalISODate } from "./schedule.js";
 import { renderToday } from "./views/today.js";
 import { renderHistory } from "./views/history.js";
 import { renderSettings } from "./views/settings.js";
@@ -17,21 +20,52 @@ function showError(err) {
   console.error(err);
 }
 
+function showWarning(message) {
+  const el = document.getElementById("warning");
+  el.textContent = message;
+  el.hidden = false;
+}
+
 async function boot() {
   const main = document.getElementById("main");
   let config;
+  let content;
   try {
-    config = await loadConfig();
+    [config, content] = await Promise.all([loadConfig(), loadContent()]);
   } catch (err) {
     showError(err);
     main.replaceChildren();
     return;
   }
-  const ctx = { config };
+
+  const store = createStore(window.localStorage);
+  store.load();
+  if (store.warning) showWarning(store.warning);
+
+  // Housekeeping that must never block the app.
+  pruneRecordings(store.state.settings.keepRecordingsDays, toLocalISODate(new Date())).catch(() => {});
+  if (Object.keys(store.state.days).length) navigator.storage?.persist?.().catch(() => {});
+
+  // Views register cleanups (timers, autosaves, open microphones) that run before the next view.
+  let cleanups = [];
+  const runCleanups = () => {
+    cleanups.forEach((fn) => {
+      try {
+        fn();
+      } catch (err) {
+        console.error(err);
+      }
+    });
+    cleanups = [];
+  };
+  const app = { config, content, store, onCleanup: (fn) => cleanups.push(fn) };
+
   startRouter(routes, (render, params) => {
+    runCleanups();
     try {
-      main.replaceChildren(render(ctx, params));
+      main.replaceChildren(render(app, params));
       main.focus({ preventScroll: true });
+      window.scrollTo(0, 0);
     } catch (err) {
       showError(err);
     }

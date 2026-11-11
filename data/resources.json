@@ -1,0 +1,13 @@
+{
+  "_comment": "Always-available reference links, shown at the bottom of Today and in Sunday review.",
+  "links": [
+    { "label": "WordReference", "url": "https://www.wordreference.com", "tags": ["dictionary"], "verify": false },
+    { "label": "Larousse dictionnaire", "url": "https://www.larousse.fr/dictionnaires/francais", "tags": ["dictionary"], "verify": true },
+    { "label": "Reverso Context", "url": "https://context.reverso.net", "tags": ["examples"], "verify": false },
+    { "label": "Linguee", "url": "https://www.linguee.fr", "tags": ["examples"], "verify": false },
+    { "label": "Le Conjugueur", "url": "https://leconjugueur.lefigaro.fr", "tags": ["conjugation"], "verify": true },
+    { "label": "Forvo", "url": "https://forvo.com", "tags": ["pronunciation"], "verify": false },
+    { "label": "TV5Monde Apprendre", "url": "https://apprendre.tv5monde.com", "tags": ["exercises"], "verify": false },
+    { "label": "Claude", "url": "https://claude.ai", "tags": ["correction"], "verify": false }
+  ]
+}

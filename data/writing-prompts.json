@@ -1,0 +1,27 @@
+{
+  "_comment": "Writing prompts (Wed/Sat). targetWords is a guide, not a limit. grammarTopic (optional) must match an id in grammar.json.",
+  "items": [
+    { "id": "wr-presentation", "prompt": "Présente-toi à une famille d'accueil en France : qui tu es, ce que tu étudies, ce que tu aimes.", "hint": "A friendly letter: Chère famille…, Je vous embrasse.", "targetWords": 120, "level": "A2" },
+    { "id": "wr-souvenir", "prompt": "Raconte un souvenir de vacances quand tu étais enfant.", "hint": "Imparfait for the setting, passé composé for events.", "grammarTopic": "pc-vs-imparfait", "targetWords": 150, "level": "B1" },
+    { "id": "wr-mail-prof", "prompt": "Écris un e-mail à un professeur pour demander un délai pour un projet.", "hint": "Formal register: Madame, Monsieur…, Je vous prie d'agréer…", "grammarTopic": "conditionnel-present", "targetWords": 120, "level": "B1" },
+    { "id": "wr-avis-resto", "prompt": "Écris un avis en ligne sur un restaurant où tu as mangé récemment.", "hint": "Le plat que j'ai commandé…, la serveuse qui…", "grammarTopic": "relatifs-simples", "targetWords": 130, "level": "B1" },
+    { "id": "wr-colocataire", "prompt": "Ton colocataire ne fait jamais la vaisselle. Laisse-lui un message poli mais ferme.", "hint": "Negation and COI pronouns: je te demande de…, tu ne… jamais.", "grammarTopic": "negation", "targetWords": 100, "level": "B1" },
+    { "id": "wr-cadeau", "prompt": "Raconte un cadeau que tu as offert à quelqu'un. Pourquoi l'as-tu choisi ?", "hint": "Pronouns: je le lui ai offert.", "grammarTopic": "double-pronouns", "targetWords": 130, "level": "B1" },
+    { "id": "wr-projet-ete", "prompt": "Décris tes projets pour l'été prochain.", "hint": "Futur simple, futur proche, and quand + futur.", "grammarTopic": "futur", "targetWords": 150, "level": "B1" },
+    { "id": "wr-monde-ideal", "prompt": "Si tu pouvais changer une chose dans ta ville, que changerais-tu et pourquoi ?", "hint": "Si + imparfait → conditionnel.", "grammarTopic": "si-clauses", "targetWords": 150, "level": "B1" },
+    { "id": "wr-lettre-moi", "prompt": "Écris une lettre à toi-même il y a cinq ans.", "hint": "Advice and regrets: tu devrais…, j'aurais aimé…", "grammarTopic": "conditionnel-passe", "targetWords": 180, "level": "B2" },
+    { "id": "wr-teletravail", "prompt": "Le télétravail : avantages et inconvénients. Donne ton opinion.", "hint": "Structure: intro, pour, contre, conclusion. Use connectors.", "grammarTopic": "connecteurs", "targetWords": 200, "level": "B2" },
+    { "id": "wr-voiture-electrique", "prompt": "Faut-il interdire les voitures à essence dans les centres-villes ?", "hint": "Il faut que…, bien que…, pour que… (+ subjonctif).", "grammarTopic": "subjonctif-present", "targetWords": 200, "level": "B2" },
+    { "id": "wr-doute", "prompt": "Est-ce que les études universitaires sont indispensables pour réussir ? Nuance ta réponse.", "hint": "Je ne crois pas que…, il est évident que…", "grammarTopic": "subjonctif-vs-indicatif", "targetWords": 200, "level": "B2" },
+    { "id": "wr-fait-divers", "prompt": "Écris un court article de journal sur un événement imaginaire dans ton quartier.", "hint": "Passive voice and plus-que-parfait: a été retrouvé, avait disparu.", "grammarTopic": "voix-passive", "targetWords": 180, "level": "B2" },
+    { "id": "wr-retard", "prompt": "Tu es arrivé très en retard à un rendez-vous important. Raconte ce qui s'était passé avant.", "hint": "Plus-que-parfait for everything that came before.", "grammarTopic": "plus-que-parfait", "targetWords": 150, "level": "B1" },
+    { "id": "wr-apprendre", "prompt": "Comment apprends-tu le mieux ? Décris ta méthode.", "hint": "Gérondif: en écoutant, en répétant.", "grammarTopic": "gerondif", "targetWords": 150, "level": "B2" },
+    { "id": "wr-interview", "prompt": "Résume une interview ou un épisode de podcast que tu as écouté cette semaine.", "hint": "Reported speech: il a expliqué que…, elle a demandé si…", "grammarTopic": "discours-indirect", "targetWords": 180, "level": "B2" },
+    { "id": "wr-objet-tech", "prompt": "Explique le fonctionnement d'un appareil électrique simple à un enfant.", "hint": "Clear structure; dont, auquel, grâce auquel.", "grammarTopic": "relatifs-composes", "targetWords": 180, "level": "B2" },
+    { "id": "wr-demenagement", "prompt": "Raconte ton premier jour dans un nouveau logement.", "hint": "Watch past participle agreement: nous sommes arrivés, les clés que j'ai reçues.", "grammarTopic": "accord-pp", "targetWords": 150, "level": "B1" },
+    { "id": "wr-recette", "prompt": "Écris la recette d'un plat de ton pays.", "hint": "Imperative or infinitive; en for quantities: prenez-en deux.", "grammarTopic": "y-en", "targetWords": 130, "level": "B1" },
+    { "id": "wr-plainte", "prompt": "Écris une réclamation à une entreprise : ton colis n'est jamais arrivé.", "hint": "Formal complaint; I have contacted them / I was told that… → on m'a dit que…", "grammarTopic": "cod-coi", "targetWords": 150, "level": "B1" },
+    { "id": "wr-faux-amis", "prompt": "Raconte une situation drôle ou gênante causée par un malentendu de langue.", "hint": "Good place to use a false friend correctly!", "targetWords": 150, "level": "B1" },
+    { "id": "wr-semaine", "prompt": "Écris ton journal de la semaine : ce qui s'est bien passé et ce qui était difficile.", "hint": "Mix tenses naturally; finish with a goal for next week.", "targetWords": 150, "level": "B1" }
+  ]
+}

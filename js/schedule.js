@@ -38,6 +38,32 @@ export function parseLocalDate(iso) {
   return valid ? date : null;
 }
 
+export function addDays(date, n) {
+  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  d.setDate(d.getDate() + n);
+  return d;
+}
+
+export function addDaysIso(iso, n) {
+  return toLocalISODate(addDays(parseLocalDate(iso), n));
+}
+
+/** Whole days from a to b (b - a), immune to DST shifts. */
+export function daysBetween(aIso, bIso) {
+  const utc = (iso) => {
+    const [y, m, d] = iso.split("-").map(Number);
+    return Date.UTC(y, m - 1, d);
+  };
+  return Math.round((utc(bIso) - utc(aIso)) / 86400000);
+}
+
+/** Monday of the week containing `iso`. */
+export function weekStartIso(iso) {
+  const d = parseLocalDate(iso);
+  const offset = (d.getDay() + 6) % 7; // Mon=0 … Sun=6
+  return toLocalISODate(addDays(d, -offset));
+}
+
 export function weekdayKey(date) {
   return WEEKDAY_KEYS[date.getDay()];
 }
@@ -62,8 +88,7 @@ export function minutesOfDay(hhmm) {
  * The ordered blocks for a given date, with clock times.
  * @returns {{key:string,label:string,minutes:number,start:string,end:string,focusType?:string}[]}
  */
-export function sessionPlan(date, config) {
-  const focusType = focusForDate(date, config);
+export function sessionPlan(date, config, focusType = focusForDate(date, config)) {
   let cursor = config.sessionStart;
   return BLOCK_ORDER.map((key) => {
     const minutes = config.blocks[key].minutes;

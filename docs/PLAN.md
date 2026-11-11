@@ -4,42 +4,26 @@ A local, single-user dashboard for one 60-minute French session a day
 (17:30–18:30). It runs on `http://localhost:8765`, keeps all data in the
 browser, and reads its content from plain JSON files you can edit by hand.
 
-Status: **Milestone 1 built.** Milestones 2–8 are waiting on your approval and
-your answers to the questions in section 1.
+Status: **All eight milestones built** (11 Nov 2026). The design questions
+were settled with the recommended defaults below; change any of them later by
+editing the code or `data/config.json`.
 
 ---
 
-## 1. Clarifying questions
+## 1. Design decisions
 
-These are the ones that would change the design. Until you answer, the plan
-uses the default shown in *italics*.
-
-1. **Phone use.** Will you open the app *on your phone* (over Wi-Fi), or only in
-   a narrow browser window on the laptop? A phone hitting
-   `http://192.168.x.x:8000` is not a "secure context", so the microphone
-   recorder and the clipboard button will not work there, and the phone would
-   have its own separate storage. Supporting real phone use means a small
-   Python server with HTTPS and a JSON file on disk.
-   *Default: laptop only; layout still works at phone width.*
-2. **Where progress lives.** The GitHub repo `French` is **public**. Should
-   progress (logs, writing, words) stay in the browser only, with a manual
-   export/import backup file that git ignores? Or do you want it written to a
-   file in the repo (which means either a private repo or a gitignored file plus
-   a tiny server)?
-   *Default: browser storage only, plus export/import to a gitignored
-   `backups/` folder.*
-3. **Streak rule.** What counts as a day? All three blocks? Any one block? Does
-   Sunday count the same, and does a missed day reset the streak to 0?
-   *Default: a day counts when Anki, Listening and Focus are all ticked; the log
-   is optional; any missed day resets to 0; today stays open until midnight.*
-4. **Grammar progression.** Should the topic move on *automatically every
-   Monday* (calendar-driven), or only when you mark Thursday's drill as
-   "got it" (mastery-driven, so a hard topic can take two weeks)?
-   *Default: mastery-driven, with a manual "skip / go back" in Settings.*
-5. **Speaking recordings.** Keep a history of recordings so you can hear
-   progress over months (stored in IndexedDB, roughly 0.5–1 MB a minute), or
-   only keep the last N days?
-   *Default: keep the last 14 days, plus any you star.*
+| Question | Decision |
+| --- | --- |
+| Phone use | Laptop only. The layout works at phone width, but a phone on `http://192.168.x.x` isn't a secure context, so the mic and copy button wouldn't work there. |
+| Where progress lives | In the browser only (`localStorage` + IndexedDB), with export/import backup files. `backups/` is git-ignored because the repo is public. |
+| Streak rule | A day counts when Anki, Listening and Focus are ticked; the log is optional. A missed day resets to 0. Today stays open until midnight. Sunday counts the same. |
+| Grammar progression | Mastery-driven: the topic moves on only when Thursday's drill is marked "Got it". Settings can jump to any topic. After the last topic, the list starts again (round 2). |
+| Speaking recordings | Kept 14 days (changeable in Settings), starred takes kept forever. |
+| Anki export | Yes: words noted as `mot = meaning` export as a tab-separated file for Anki's import. |
+| UI language | English labels, French content and dates. |
+| Timers | Don't auto-advance; the next unfinished block is highlighted. Starting one timer pauses the others. |
+| Pronunciation | A 3-minute warm-up drill (nasals, u/ou, silent endings, liaison, R…) on speaking days, with Forvo links. |
+| False friends | Two per week in Sunday review, for both English and Spanish traps. |
 
 ---
 
@@ -62,50 +46,54 @@ Dependencies added: **none.**
 
 ```
 French/
-├── index.html              App shell: header, nav, <main> mount point, error banner
+├── index.html              App shell: header, nav, <main>, error and warning banners
 ├── package.json            "type": "module" + start/test scripts. No dependencies.
-├── README.md               How to run, how to edit content, how to back up
-├── .gitignore              Ignores backups/, OS junk
+├── README.md               How to run, edit content, back up
+├── .gitignore              Ignores backups/ (personal data) and OS junk
+├── .claude/launch.json     Preview-server config for Claude Code
 ├── css/
-│   └── styles.css          Design tokens (light/dark), layout, cards, timer, forms
+│   └── styles.css          Light/dark tokens, layout, cards, timer, forms, calendar
 ├── js/
-│   ├── main.js             Boot: load config + content, start router, render
-│   ├── router.js           Hash router: #/today, #/history, #/settings
-│   ├── content.js          fetch() JSON files (no-store cache), validate, friendly errors
-│   ├── schedule.js         PURE: date → weekday plan, focus type, grammar topic,
-│   │                       podcast/prompt rotation. No DOM, no storage.
-│   ├── streak.js           PURE: streak, totals, per-week stats from history
-│   ├── storage.js          localStorage wrapper: versioned schema, migrations,
-│   │                       export/import, persist() request
-│   ├── recordings.js       IndexedDB store for speaking recordings
-│   ├── timer.js            Countdown component based on timestamps (survives
-│   │                       reload and background-tab throttling)
+│   ├── main.js             Boot: load config + content, open store, router, cleanups
+│   ├── router.js           Hash router: #/today[?date=], #/history, #/settings
+│   ├── content.js          fetch + validate data/*.json, link builders
+│   ├── schedule.js         PURE: dates, weekday → focus, block times
+│   ├── picks.js            PURE: least-used rotation for podcasts/prompts/drills
+│   ├── day.js              PURE: day records, grammar verdicts, words, word count,
+│   │                       correction-prompt template
+│   ├── streak.js           PURE: streaks, totals, week summary, Anki export
+│   ├── storage.js          Versioned localStorage store, migration, backup format
+│   ├── recordings.js       IndexedDB store for audio, pruning, backup helpers
 │   ├── recorder.js         MediaRecorder wrapper with codec detection
-│   ├── dom.js              Tiny helpers: h() element builder, escaping, debounce
+│   ├── timer.js            Timestamp-based countdown widget
+│   ├── sound.js            Web Audio chime (no audio file)
+│   ├── dom.js              h() builder, autosave field, copy, download helpers
 │   └── views/
-│       ├── today.js        The session page: renders the blocks in order
-│       ├── history.js      Calendar/list of past days, streak, stats
-│       ├── settings.js     Start date, grammar position, export/import, reset
+│       ├── today.js        The session page: header, four block cards, links
+│       ├── history.js      Stats, 12-week calendar, word export, day list
+│       ├── settings.js     Backup, grammar position, preferences, storage, reset
 │       └── blocks/
-│           ├── anki.js       Links to Anki + checkbox
-│           ├── listening.js  Today's pick, "another one" button, words field
-│           ├── grammar.js    Topic of the week, learn/drill, links
-│           ├── speaking.js   Prompt, recorder, playback, self-rating
-│           ├── writing.js    Prompt, autosaving textarea, "copy for correction"
-│           ├── review.js     Sunday: suggests weak areas from the week
-│           └── log.js        Went well / fix next time
+│           ├── anki.js       Anki links
+│           ├── listening.js  Today's pick, "Pick another", words field
+│           ├── grammar.js    Topic, key points, examples, links, verdict
+│           ├── speaking.js   Prompt, warm-up, recorder, takes, self-rating
+│           ├── writing.js    Prompt, autosaving text, Copy for correction
+│           ├── review.js     Sunday: week summary, catch-up, words, false friends
+│           └── log.js        Went well / fix next, with last time's "fix"
 ├── data/                   ← edit these freely, no code involved
-│   ├── config.json         Durations, session time, start date, Anki links
-│   ├── podcasts.json       Rotating listening list
-│   ├── grammar.json        Ordered B1→B2 topic list with links
+│   ├── config.json         Times, durations, weekday plan, Anki links,
+│   │                       correction-prompt template
+│   ├── podcasts.json       Listening rotation
+│   ├── grammar.json        19 B1→B2 topics + learn/drill sites
 │   ├── speaking-prompts.json
 │   ├── writing-prompts.json
-│   └── resources.json      Always-available links (dictionary, conjugation…)
+│   ├── pronunciation.json  Warm-up drills + audio link pattern
+│   ├── false-friends.json  EN and ES false friends
+│   └── resources.json      Always-available links
 ├── tests/
 │   ├── schedule.test.js
-│   ├── streak.test.js
-│   ├── storage.test.js
-│   └── content.test.js     Validates every data/*.json file against its schema
+│   ├── content.test.js     Validates every data file
+│   └── logic.test.js       Storage, rotation, days, streaks, timers, pruning
 └── docs/
     └── PLAN.md             This file
 ```
@@ -175,8 +163,9 @@ approximate CEFR label used only for display and filtering.
       "title": "Passé composé vs imparfait",
       "level": "B1",
       "summary": "Completed actions vs background, habits and descriptions.",
-      "learn": [ { "label": "…", "url": "…", "verify": true } ],
-      "drill": [ { "label": "…", "url": "…", "verify": true } ]
+      "query": "passé composé imparfait",
+      "keyPoints": ["…"],
+      "examples": [ { "fr": "…", "en": "…" } ]
     }
   ]
 }
@@ -211,16 +200,16 @@ after that grammar week. Writing prompts also take an optional
 {
   "schemaVersion": 1,
   "days": {
-    "2026-11-16": {
-      "focusType": "grammar-learn",
+    "2026-11-19": {
+      "focusType": "grammar-drill",
+      "pickedOn": "2026-11-19",
       "blocks": {
-        "anki":      { "done": true,  "doneAt": "2026-11-16T17:41:02" },
+        "anki":      { "done": true,  "doneAt": "2026-11-19T16:41:02.000Z" },
         "listening": { "done": true,  "itemId": "innerfrench",
-                       "words": ["avoir du mal à", "un chantier"] },
+                       "words": ["avoir du mal à = to struggle to", "un chantier"] },
         "focus":     { "done": false, "grammarTopic": "pc-vs-imparfait",
-                       "promptId": null, "text": null,
-                       "rating": null, "recordingIds": [] },
-        "log":       { "wentWell": "", "fixNext": "" }
+                       "notes": "", "verdict": "got-it" },
+        "log":       { "done": false, "wentWell": "", "fixNext": "" }
       },
       "timers": {
         "listening": { "remainingMs": 912000, "runningSince": null }
@@ -228,14 +217,23 @@ after that grammar week. Writing prompts also take an optional
     }
   },
   "grammar": {
-    "currentIndex": 0,
-    "history": [ { "topicId": "pc-vs-imparfait", "startedOn": "2026-11-16",
-                   "status": "learning" } ]
+    "currentIndex": 1,
+    "log": [ { "date": "2026-11-19", "topicId": "pc-vs-imparfait", "verdict": "got-it" } ]
   },
-  "rotation": { "podcastOffset": 0, "speakingOffset": 0, "writingOffset": 0 },
-  "settings": { "chime": true }
+  "settings": { "chime": true, "keepRecordingsDays": 14, "lastBackup": null }
 }
 ```
+
+The `focus` object depends on the day's type:
+- grammar: `grammarTopic`, `notes`, `verdict` (Thursday: `"got-it" | "again" | null`)
+- speaking: `promptId`, `drillId`, `rating` `{fluency, pronunciation, accuracy}`
+  (1–5 or null), `notes`, `recordingIds`
+- writing: `promptId`, `text`, `corrections`
+- review: `notes`
+
+Rotation isn't stored: each pick goes to the least-used item, counted from
+past days whose block was ticked. `pickedOn` lets a day previewed in advance
+get fresh picks when it actually arrives.
 
 - Days are keyed by **local date** (`YYYY-MM-DD`), never UTC, so an evening
   session can't land on the wrong day.
@@ -265,7 +263,7 @@ data never reaches the public repo.
 Each one runs with `npm start` (or `python -m http.server 8765`) and leaves
 the app working.
 
-### M1 · Skeleton and schedule ✅ built
+### M1 · Skeleton and schedule ✅
 - `index.html`, `styles.css` (light/dark tokens, responsive), hash router with
   Today / History / Settings views, `config.json` loaded via `content.js`,
   error banner for missing or broken JSON, `schedule.js` (weekday → focus
@@ -276,7 +274,7 @@ the app working.
   layout works at 375 px; `npm test` passes; breaking `config.json` shows a
   readable error instead of a blank page.
 
-### M2 · Content files
+### M2 · Content files ✅
 - Fill `podcasts.json`, `grammar.json` (about 16 B1→B2 topics), both prompt
   files (about 20 each), `resources.json`. Unverified links get
   `"verify": true`. `content.test.js` validates every file (required fields,
@@ -285,20 +283,20 @@ the app working.
   topic and prompt today would use; a deliberately broken file fails the test
   with a clear message.
 
-### M3 · Timers, checkboxes, persistence
+### M3 · Timers, checkboxes, persistence ✅
 - `timer.js` (start / pause / reset, chime at zero), `storage.js` (versioned
   load/save), a "done" checkbox per block. Today's state survives a reload.
 - **Done when:** a running timer keeps correct time across a reload and
   background tab; checkboxes persist; `storage.test.js` covers load, save and
   migration from an empty or corrupt store.
 
-### M4 · Anki and Listening blocks
+### M4 · Anki and Listening blocks ✅
 - Anki links + checkbox. Listening: today's pick by date rotation, "pick
   another" button, words field (one per line, autosaved).
 - **Done when:** the pick is stable across reloads on the same day and
   changes the next day; words persist.
 
-### M5 · Grammar, Writing, Review blocks
+### M5 · Grammar, Writing, Review blocks ✅
 - Grammar: topic of the week, learn links (Mon) / drill links (Thu), "got it"
   / "needs another week". Writing: prompt, autosaving textarea with word
   count, **Copy for correction** builds the correction prompt with your text.
@@ -306,20 +304,20 @@ the app working.
 - **Done when:** the textarea never loses text on reload; the copied prompt
   pastes cleanly into Claude; the grammar topic advances by the chosen rule.
 
-### M6 · Speaking block
+### M6 · Speaking block ✅
 - `recorder.js` + `recordings.js`: record / stop / replay, list of today's
   takes, 1–5 self-rating with short criteria (fluency, pronunciation,
   accuracy). Codec detected per browser. Old recordings pruned per Q5.
 - **Done when:** you can record, reload, and still replay; mic denial shows a
   helpful message rather than an error.
 
-### M7 · Log, streak, history
+### M7 · Log, streak, history ✅
 - Final log block. `streak.js` (current and longest streak, per-week totals).
   History view: one row per day with blocks done, focus, words, log notes.
 - **Done when:** `streak.test.js` covers gaps, today-in-progress, Sundays and
   timezone edges; history shows real saved days.
 
-### M8 · Settings and polish
+### M8 · Settings and polish ✅
 - Export / import backup, reset with confirmation, grammar position
   override, show the storage origin, `navigator.storage.persist()`. Keyboard
   and accessibility pass, phone-width check.
@@ -328,7 +326,7 @@ the app working.
 
 ---
 
-## 6. Risks and open decisions
+## 6. Risks
 
 **Risks**
 - **Storage is tied to the exact origin.** `localhost:8765`,
@@ -351,13 +349,8 @@ the app working.
 - **Port 8000 is reserved by Windows on this machine** (Hyper-V/WinNAT excluded range), so the app uses **8765**. If that is ever taken, change it in `package.json`, `.claude/launch.json` and README; note that changing port means a new, empty storage origin (export first).
 - **Public repo.** Never commit `backups/` or anything personal.
 
-**Open decisions** (beyond section 1)
-- Export the week's new words as an **Anki-importable CSV** (front/back)?
-  Cheap to add in M7, closes the loop between Listening and Anki.
-- UI language: English labels with French content (current), or French UI
-  for extra exposure?
-- Should timers auto-advance to the next block, or wait for you?
-  *Current: wait; the next block is highlighted.*
-- Pronunciation focus (your weak point): add a recurring nasal-vowel and
-  spelling-vs-sound mini-drill to speaking days, using Forvo for reference
-  audio?
+**Not covered by automated tests**
+- Recording with a real microphone (the recorder UI, storage, starring,
+  export and import were tested with a synthetic recording).
+- The timer chime (needs a human ear).
+- Links marked `"verify": true` still need a manual check.

@@ -1,0 +1,342 @@
+{
+  "_comment": "Grammar topics in order. Monday = learn, Thursday = drill. Marking 'Got it' on Thursday moves to the next topic. Links are built as site-restricted searches: searchUrl + 'site:<domain> ' + query, so they never point at a page that doesn't exist.",
+  "searchUrl": "https://www.google.com/search?q=",
+  "sites": {
+    "learn": [
+      { "label": "Lawless French", "url": "https://www.lawlessfrench.com", "verify": false },
+      { "label": "Kwiziq French", "url": "https://french.kwiziq.com", "verify": false },
+      { "label": "TV5Monde Apprendre", "url": "https://apprendre.tv5monde.com", "verify": false }
+    ],
+    "drill": [
+      { "label": "Le Point du FLE", "url": "https://www.lepointdufle.net", "verify": false },
+      { "label": "Français facile", "url": "https://www.francaisfacile.com", "verify": false },
+      { "label": "Kwiziq French", "url": "https://french.kwiziq.com", "verify": false },
+      { "label": "Bonjour de France", "url": "https://www.bonjourdefrance.com", "verify": true }
+    ]
+  },
+  "topics": [
+    {
+      "id": "pc-vs-imparfait",
+      "title": "Passé composé vs imparfait",
+      "level": "B1",
+      "query": "passé composé imparfait",
+      "summary": "Passé composé tells what happened (completed events). Imparfait sets the scene: background, descriptions, habits, ongoing actions.",
+      "keyPoints": [
+        "Events that move the story forward → passé composé.",
+        "Description, weather, feelings, age, time → imparfait.",
+        "Repeated past habits (\"I used to…\") → imparfait.",
+        "An ongoing action interrupted by an event: imparfait + passé composé."
+      ],
+      "examples": [
+        { "fr": "Il pleuvait quand je suis sorti.", "en": "It was raining when I went out." },
+        { "fr": "Quand j'étais petit, je jouais au foot tous les samedis.", "en": "When I was little, I used to play football every Saturday." }
+      ]
+    },
+    {
+      "id": "accord-pp",
+      "title": "Agreement of the past participle",
+      "level": "B1",
+      "query": "accord du participe passé être avoir",
+      "summary": "With être, the participle agrees with the subject. With avoir, it agrees only with a direct object placed before the verb.",
+      "keyPoints": [
+        "Être verbs (aller, venir, partir, naître…) and reflexive verbs: agree with the subject.",
+        "Avoir: no agreement with the subject, ever.",
+        "Avoir + a COD before the verb (la, les, que…): agree with that COD.",
+        "Most of these agreements are silent; spelling matters more than pronunciation here."
+      ],
+      "examples": [
+        { "fr": "Elles sont parties tôt.", "en": "They left early." },
+        { "fr": "Les lettres que j'ai écrites sont sur la table.", "en": "The letters I wrote are on the table." }
+      ]
+    },
+    {
+      "id": "cod-coi",
+      "title": "Direct and indirect object pronouns (COD / COI)",
+      "level": "B1",
+      "query": "pronoms COD COI le la les lui leur",
+      "summary": "Le, la, les replace a direct object; lui, leur replace an object introduced by à + person. They go before the conjugated verb.",
+      "keyPoints": [
+        "COD: me, te, le/la, nous, vous, les.",
+        "COI (à + person): me, te, lui, nous, vous, leur.",
+        "Position: before the verb (je le vois), before the infinitive (je vais le voir).",
+        "Watch verbs that differ from Spanish/English: téléphoner à quelqu'un → je lui téléphone."
+      ],
+      "examples": [
+        { "fr": "Tu as vu Marie ? Oui, je l'ai vue hier.", "en": "Did you see Marie? Yes, I saw her yesterday." },
+        { "fr": "J'ai parlé à mes parents. Je leur ai tout expliqué.", "en": "I talked to my parents. I explained everything to them." }
+      ]
+    },
+    {
+      "id": "y-en",
+      "title": "The pronouns y and en",
+      "level": "B1",
+      "query": "pronoms y en",
+      "summary": "Y replaces à + thing or a place. En replaces de + noun, including quantities.",
+      "keyPoints": [
+        "Y: places (j'y vais) and à + thing (j'y pense).",
+        "En: de + thing (j'en parle), partitives (j'en veux), quantities (j'en ai trois).",
+        "For people after à/de, use lui/leur or de lui/d'elle instead.",
+        "Fixed expressions: il y a, on y va, je m'en vais, j'en ai marre."
+      ],
+      "examples": [
+        { "fr": "Tu vas à Paris ? Oui, j'y vais demain.", "en": "Are you going to Paris? Yes, I'm going there tomorrow." },
+        { "fr": "Tu as des frères ? Oui, j'en ai deux.", "en": "Do you have brothers? Yes, I have two (of them)." }
+      ]
+    },
+    {
+      "id": "negation",
+      "title": "Complex negation",
+      "level": "B1",
+      "query": "négation ne plus jamais rien personne que",
+      "summary": "Ne… pas has many cousins: ne… plus, jamais, rien, personne, que, aucun. In speech, ne is usually dropped.",
+      "keyPoints": [
+        "ne… plus (no longer), ne… jamais (never), ne… rien (nothing), ne… personne (nobody).",
+        "ne… que = only (it's not really negative): je n'ai que dix euros.",
+        "Passé composé: ne… pas/rien/jamais wrap the auxiliary, but personne goes after the participle.",
+        "Spoken French drops ne: j'sais pas, y a personne."
+      ],
+      "examples": [
+        { "fr": "Je n'ai rien compris.", "en": "I didn't understand anything." },
+        { "fr": "Je n'ai vu personne.", "en": "I didn't see anyone." }
+      ]
+    },
+    {
+      "id": "double-pronouns",
+      "title": "Order of double pronouns",
+      "level": "B1",
+      "query": "ordre des doubles pronoms",
+      "summary": "When two pronouns combine, the order is fixed: me/te/se/nous/vous → le/la/les → lui/leur → y → en.",
+      "keyPoints": [
+        "Je te le donne. Je le lui donne. Il y en a.",
+        "Lui/leur come after le/la/les; me/te/nous/vous come before.",
+        "Positive imperative is different: donne-le-moi.",
+        "Practise aloud: these clusters are a pronunciation drill too."
+      ],
+      "examples": [
+        { "fr": "Tu me prêtes ton vélo ? Oui, je te le prête.", "en": "Will you lend me your bike? Yes, I'll lend it to you." },
+        { "fr": "Il a donné les clés à sa sœur ? Oui, il les lui a données.", "en": "Did he give the keys to his sister? Yes, he gave them to her." }
+      ]
+    },
+    {
+      "id": "relatifs-simples",
+      "title": "Relative pronouns qui, que, où, dont",
+      "level": "B1",
+      "query": "pronoms relatifs qui que où dont",
+      "summary": "Qui is the subject of the clause, que the direct object, où a place or time, dont replaces de + noun.",
+      "keyPoints": [
+        "Qui + verb: l'homme qui parle.",
+        "Que + subject + verb: le livre que je lis.",
+        "Où for place and time: le jour où je suis arrivé.",
+        "Dont with verbs/expressions using de: le film dont je t'ai parlé (parler de)."
+      ],
+      "examples": [
+        { "fr": "C'est la ville où j'ai grandi.", "en": "It's the town where I grew up." },
+        { "fr": "Voici le livre dont j'ai besoin.", "en": "Here's the book I need." }
+      ]
+    },
+    {
+      "id": "plus-que-parfait",
+      "title": "Plus-que-parfait",
+      "level": "B1",
+      "query": "plus-que-parfait",
+      "summary": "An action that happened before another past action: imparfait of avoir/être + past participle.",
+      "keyPoints": [
+        "Form: j'avais mangé, j'étais parti(e).",
+        "Use it to go one step further back in a past story.",
+        "Same agreement rules as the passé composé.",
+        "Needed later for si + plus-que-parfait (regrets)."
+      ],
+      "examples": [
+        { "fr": "Quand je suis arrivé, le train était déjà parti.", "en": "When I arrived, the train had already left." },
+        { "fr": "Elle m'a dit qu'elle avait fini.", "en": "She told me she had finished." }
+      ]
+    },
+    {
+      "id": "futur",
+      "title": "Futur simple vs futur proche",
+      "level": "B1",
+      "query": "futur simple futur proche",
+      "summary": "Futur proche (aller + infinitive) for near, planned or certain events; futur simple for further, formal or less certain ones.",
+      "keyPoints": [
+        "Futur simple endings on the infinitive: -ai, -as, -a, -ons, -ez, -ont.",
+        "Learn the irregular stems: ir-, aur-, ser-, fer-, pourr-, voudr-, viendr-, devr-.",
+        "After quand about the future, French uses the future: quand j'aurai le temps.",
+        "Spelling vs sound: je parlerai and je parlerais sound almost the same."
+      ],
+      "examples": [
+        { "fr": "Je vais appeler ma mère ce soir.", "en": "I'm going to call my mother tonight." },
+        { "fr": "Quand je serai ingénieur, je travaillerai à l'étranger.", "en": "When I'm an engineer, I'll work abroad." }
+      ]
+    },
+    {
+      "id": "conditionnel-present",
+      "title": "Conditionnel présent",
+      "level": "B1",
+      "query": "conditionnel présent",
+      "summary": "Future stem + imparfait endings. Used for politeness, wishes, advice and hypotheses.",
+      "keyPoints": [
+        "Form: je voudrais, tu pourrais, il faudrait, nous aurions.",
+        "Politeness: Pourriez-vous m'aider ?",
+        "Advice: Tu devrais dormir plus.",
+        "Unconfirmed news: Le président serait malade."
+      ],
+      "examples": [
+        { "fr": "J'aimerais voyager au Québec.", "en": "I would like to travel to Quebec." },
+        { "fr": "À ta place, je prendrais le train.", "en": "If I were you, I'd take the train." }
+      ]
+    },
+    {
+      "id": "si-clauses",
+      "title": "Si clauses (hypotheses)",
+      "level": "B1",
+      "query": "phrases avec si hypothèse",
+      "summary": "Three patterns: si + présent → futur; si + imparfait → conditionnel; si + plus-que-parfait → conditionnel passé.",
+      "keyPoints": [
+        "Real: Si tu viens, on ira au cinéma.",
+        "Imaginary: Si j'avais le temps, j'apprendrais le piano.",
+        "Regret: Si j'avais su, je serais venu.",
+        "Never put the conditional right after si (unlike some Spanish/English slips)."
+      ],
+      "examples": [
+        { "fr": "Si j'étais riche, j'achèterais une maison à la mer.", "en": "If I were rich, I'd buy a house by the sea." },
+        { "fr": "S'il pleut demain, on restera chez nous.", "en": "If it rains tomorrow, we'll stay home." }
+      ]
+    },
+    {
+      "id": "subjonctif-present",
+      "title": "Subjonctif présent: forms and triggers",
+      "level": "B2",
+      "query": "subjonctif présent formation emploi",
+      "summary": "Stem from ils (present) + -e, -es, -e, -ions, -iez, -ent. Triggered by will, emotion, necessity after que.",
+      "keyPoints": [
+        "Irregulars: être (sois), avoir (aie), aller (aille), faire (fasse), pouvoir (puisse), savoir (sache), vouloir (veuille).",
+        "Triggers: il faut que, je veux que, je suis content que, bien que, pour que, avant que.",
+        "Same subject? Use an infinitive: je veux partir, not je veux que je parte.",
+        "Your Spanish helps: the logic is very close to the Spanish subjuntivo."
+      ],
+      "examples": [
+        { "fr": "Il faut que tu fasses tes devoirs.", "en": "You have to do your homework." },
+        { "fr": "Je suis content que tu sois là.", "en": "I'm glad you're here." }
+      ]
+    },
+    {
+      "id": "subjonctif-vs-indicatif",
+      "title": "Subjonctif vs indicatif",
+      "level": "B2",
+      "query": "subjonctif ou indicatif penser croire douter",
+      "summary": "Certainty → indicatif; doubt, possibility, emotion → subjonctif. Opinion verbs flip in the negative.",
+      "keyPoints": [
+        "Je pense que c'est vrai (indicatif) vs je ne pense pas que ce soit vrai (subjonctif).",
+        "Il est sûr que → indicatif; il est possible que → subjonctif.",
+        "Après que takes the indicatif (even if people say otherwise); avant que takes the subjonctif.",
+        "Espérer que takes the indicatif: j'espère que tu viendras."
+      ],
+      "examples": [
+        { "fr": "Je doute qu'il puisse venir.", "en": "I doubt he can come." },
+        { "fr": "Je crois qu'il a raison.", "en": "I think he's right." }
+      ]
+    },
+    {
+      "id": "conditionnel-passe",
+      "title": "Conditionnel passé",
+      "level": "B2",
+      "query": "conditionnel passé",
+      "summary": "Conditional of avoir/être + past participle: regrets, reproaches, and unconfirmed past facts.",
+      "keyPoints": [
+        "Form: j'aurais dû, il serait venu.",
+        "Regret: J'aurais aimé le savoir.",
+        "Reproach: Tu aurais pu me prévenir !",
+        "With si + plus-que-parfait for imaginary past situations."
+      ],
+      "examples": [
+        { "fr": "J'aurais dû partir plus tôt.", "en": "I should have left earlier." },
+        { "fr": "Si tu m'avais appelé, je serais venu.", "en": "If you'd called me, I would have come." }
+      ]
+    },
+    {
+      "id": "relatifs-composes",
+      "title": "Compound relative pronouns (lequel, auquel, duquel)",
+      "level": "B2",
+      "query": "pronoms relatifs composés lequel auquel duquel",
+      "summary": "After a preposition, use lequel/laquelle/lesquels/lesquelles (people may also take qui). à and de contract: auquel, duquel.",
+      "keyPoints": [
+        "La table sur laquelle j'écris.",
+        "Le projet auquel je pense (penser à).",
+        "Le parc près duquel j'habite (près de).",
+        "For people, qui is preferred: la personne avec qui je travaille."
+      ],
+      "examples": [
+        { "fr": "C'est la raison pour laquelle je suis venu.", "en": "That's the reason why I came." },
+        { "fr": "Le problème auquel nous réfléchissons est complexe.", "en": "The problem we're thinking about is complex." }
+      ]
+    },
+    {
+      "id": "voix-passive",
+      "title": "Passive voice",
+      "level": "B2",
+      "query": "voix passive",
+      "summary": "Être (in the needed tense) + past participle agreeing with the subject; the agent is introduced by par.",
+      "keyPoints": [
+        "La maison a été construite en 1990.",
+        "Agreement with the subject is required.",
+        "Spoken French often prefers on: On a construit la maison en 1990.",
+        "Reflexive passive: Ça se dit souvent. Le vin blanc se boit frais."
+      ],
+      "examples": [
+        { "fr": "Le courrier est distribué tous les matins.", "en": "The mail is delivered every morning." },
+        { "fr": "Ce roman a été traduit en vingt langues.", "en": "This novel has been translated into twenty languages." }
+      ]
+    },
+    {
+      "id": "gerondif",
+      "title": "Gérondif and present participle",
+      "level": "B2",
+      "query": "gérondif participe présent",
+      "summary": "En + -ant shows simultaneity or manner, with the same subject as the main verb.",
+      "keyPoints": [
+        "Stem from nous (present) + -ant: parlant, finissant. Irregular: étant, ayant, sachant.",
+        "Gérondif: J'écoute des podcasts en courant.",
+        "Manner/means: C'est en forgeant qu'on devient forgeron.",
+        "The participle without en is mostly written style."
+      ],
+      "examples": [
+        { "fr": "Il s'est cassé la jambe en skiant.", "en": "He broke his leg skiing." },
+        { "fr": "En travaillant tous les jours, tu progresseras.", "en": "By working every day, you'll improve." }
+      ]
+    },
+    {
+      "id": "discours-indirect",
+      "title": "Reported speech (concordance des temps)",
+      "level": "B2",
+      "query": "discours indirect concordance des temps",
+      "summary": "With a past reporting verb, tenses shift back: présent → imparfait, passé composé → plus-que-parfait, futur → conditionnel.",
+      "keyPoints": [
+        "Il a dit : « Je suis fatigué. » → Il a dit qu'il était fatigué.",
+        "« Je viendrai » → il a dit qu'il viendrait.",
+        "Questions: est-ce que → si; qu'est-ce que → ce que.",
+        "Time words change too: demain → le lendemain, hier → la veille."
+      ],
+      "examples": [
+        { "fr": "Elle m'a demandé si j'avais faim.", "en": "She asked me if I was hungry." },
+        { "fr": "Il a dit qu'il partirait le lendemain.", "en": "He said he would leave the next day." }
+      ]
+    },
+    {
+      "id": "connecteurs",
+      "title": "Connectors: cause, consequence, opposition",
+      "level": "B2",
+      "query": "connecteurs logiques cause conséquence opposition",
+      "summary": "B2 writing is judged on structure. Learn a few connectors for each relation, and the mood they require.",
+      "keyPoints": [
+        "Cause: parce que, puisque, comme (at the start), grâce à, à cause de.",
+        "Consequence: donc, c'est pourquoi, si bien que, par conséquent.",
+        "Opposition: mais, pourtant, cependant, alors que, bien que (+ subjonctif).",
+        "Addition and structure: d'abord, ensuite, de plus, enfin, en conclusion."
+      ],
+      "examples": [
+        { "fr": "Comme il pleuvait, nous sommes restés à la maison.", "en": "As it was raining, we stayed at home." },
+        { "fr": "Bien qu'il soit fatigué, il continue à travailler.", "en": "Although he's tired, he keeps working." }
+      ]
+    }
+  ]
+}

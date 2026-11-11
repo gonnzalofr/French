@@ -1,0 +1,27 @@
+{
+  "_comment": "Speaking prompts (Tue/Fri). Aim for 2 minutes per take. grammarTopic (optional) must match an id in grammar.json; tagged prompts are preferred while that topic is current.",
+  "items": [
+    { "id": "sp-weekend", "prompt": "Raconte ton dernier week-end.", "hint": "Passé composé for events, imparfait for the background.", "grammarTopic": "pc-vs-imparfait", "level": "B1" },
+    { "id": "sp-enfance", "prompt": "Décris un souvenir d'enfance qui t'a marqué.", "hint": "Set the scene with the imparfait, then tell what happened.", "grammarTopic": "pc-vs-imparfait", "level": "B1" },
+    { "id": "sp-etudes", "prompt": "Explique ce que tu étudies et pourquoi tu as choisi l'électrotechnique.", "hint": "Use parce que, comme and grâce à.", "grammarTopic": "connecteurs", "level": "B1" },
+    { "id": "sp-ville", "prompt": "Présente ta ville à quelqu'un qui ne la connaît pas.", "hint": "Use où and qui to add detail: la place où…, le marché qui…", "grammarTopic": "relatifs-simples", "level": "B1" },
+    { "id": "sp-routine", "prompt": "Décris ta journée type, du réveil au coucher.", "hint": "Reflexive verbs: je me lève, je m'habille, je me couche.", "level": "A2" },
+    { "id": "sp-objet", "prompt": "Choisis un objet que tu utilises tous les jours. Explique ce que tu en fais.", "hint": "Practise y and en: j'en ai besoin, j'y pense.", "grammarTopic": "y-en", "level": "B1" },
+    { "id": "sp-amis", "prompt": "Parle d'un ami proche. Qu'est-ce que tu lui dis quand il a un problème ?", "hint": "COI pronouns: je lui dis, je lui conseille.", "grammarTopic": "cod-coi", "level": "B1" },
+    { "id": "sp-jamais", "prompt": "Parle de choses que tu n'as jamais faites mais que tu aimerais faire.", "hint": "ne… jamais, ne… pas encore, ne… plus.", "grammarTopic": "negation", "level": "B1" },
+    { "id": "sp-futur", "prompt": "Où te vois-tu dans dix ans ?", "hint": "Futur simple and quand + futur.", "grammarTopic": "futur", "level": "B1" },
+    { "id": "sp-riche", "prompt": "Si tu gagnais un million d'euros, qu'est-ce que tu ferais ?", "hint": "Si + imparfait → conditionnel.", "grammarTopic": "si-clauses", "level": "B1" },
+    { "id": "sp-conseil", "prompt": "Un ami veut apprendre l'espagnol. Donne-lui des conseils.", "hint": "Tu devrais…, il faudrait…, à ta place…", "grammarTopic": "conditionnel-present", "level": "B1" },
+    { "id": "sp-regret", "prompt": "Parle d'une décision que tu regrettes ou que tu aurais prise différemment.", "hint": "J'aurais dû…, si j'avais su…", "grammarTopic": "conditionnel-passe", "level": "B2" },
+    { "id": "sp-il-faut", "prompt": "Que faut-il faire pour réussir ses études ?", "hint": "Il faut que + subjonctif, then vary: il est important que…", "grammarTopic": "subjonctif-present", "level": "B2" },
+    { "id": "sp-opinion-ia", "prompt": "L'intelligence artificielle va-t-elle remplacer les ingénieurs ? Donne ton avis.", "hint": "Je pense que… / je ne pense pas que… (+ subjonctif).", "grammarTopic": "subjonctif-vs-indicatif", "level": "B2" },
+    { "id": "sp-film", "prompt": "Raconte l'histoire d'un film ou d'une série que tu as aimé.", "hint": "Present tense for plots; dont and lequel for detail.", "grammarTopic": "relatifs-composes", "level": "B2" },
+    { "id": "sp-invention", "prompt": "Présente une invention importante : qui l'a inventée, quand, et comment elle est utilisée.", "hint": "Passive voice: a été inventé par…", "grammarTopic": "voix-passive", "level": "B2" },
+    { "id": "sp-multitache", "prompt": "Qu'est-ce que tu fais en même temps que d'autres choses ? Est-ce efficace ?", "hint": "Gérondif: en marchant, en cuisinant.", "grammarTopic": "gerondif", "level": "B2" },
+    { "id": "sp-conversation", "prompt": "Rapporte une conversation récente avec un ami ou un professeur.", "hint": "Il m'a dit que…, elle m'a demandé si…", "grammarTopic": "discours-indirect", "level": "B2" },
+    { "id": "sp-voyage", "prompt": "Décris le meilleur voyage que tu as fait.", "hint": "Mix tenses; use the plus-que-parfait for what had happened before.", "grammarTopic": "plus-que-parfait", "level": "B1" },
+    { "id": "sp-trois-langues", "prompt": "Compare le français, l'espagnol et l'anglais. Qu'est-ce qui est facile ou difficile ?", "hint": "Comparatives: plus… que, moins… que, aussi… que.", "level": "B1" },
+    { "id": "sp-reseaux", "prompt": "Les réseaux sociaux : plutôt positifs ou négatifs ? Donne deux arguments pour chaque côté.", "hint": "D'un côté…, de l'autre…, pourtant, alors que.", "grammarTopic": "connecteurs", "level": "B2" },
+    { "id": "sp-objet-perdu", "prompt": "Tu as perdu ton sac. Explique à la police ce qui s'est passé et décris le sac.", "hint": "Le sac que j'avais acheté…, il était… ; agreement of the participle.", "grammarTopic": "accord-pp", "level": "B1" }
+  ]
+}

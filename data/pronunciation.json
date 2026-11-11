@@ -1,0 +1,67 @@
+{
+  "_comment": "Two-minute pronunciation warm-ups shown on speaking days. audioUrl is a pattern; {word} is replaced by each word. Read each word aloud, then compare with a native speaker.",
+  "audioUrl": "https://forvo.com/word/{word}/#fr",
+  "verify": true,
+  "drills": [
+    {
+      "id": "nasal-an-on",
+      "title": "Nasal vowels: an/en vs on",
+      "tip": "[ɑ̃] (an, en, am, em) is open, mouth wide, tongue low. [ɔ̃] (on, om) has rounded lips. Don't add an n or ng at the end.",
+      "words": ["vent", "vont", "temps", "ton", "lent", "long", "sans", "son", "blanc", "blond"]
+    },
+    {
+      "id": "nasal-in-an",
+      "title": "Nasal vowels: in/ain vs an",
+      "tip": "[ɛ̃] (in, ain, ein, im, un) is a nasal è with spread lips. In modern French, un sounds the same as in.",
+      "words": ["vin", "vent", "pain", "pan", "main", "ment", "plein", "plan", "brun", "brin"]
+    },
+    {
+      "id": "nasal-denasal",
+      "title": "Nasal or not? bon / bonne",
+      "tip": "A vowel + n/m is nasal only when no vowel follows. Bonne, une, ami: the n is pronounced and the vowel is NOT nasal.",
+      "words": ["bon", "bonne", "un", "une", "plein", "pleine", "fin", "fine", "américain", "américaine"]
+    },
+    {
+      "id": "u-ou",
+      "title": "u [y] vs ou [u]",
+      "tip": "For u, say i and round your lips without moving your tongue. Spanish and English don't have this sound.",
+      "words": ["tu", "tout", "rue", "roue", "vu", "vous", "dessus", "dessous", "pur", "pour"]
+    },
+    {
+      "id": "e-e-e",
+      "title": "é vs è vs e",
+      "tip": "é (and -er, -ez) is closed, smile. è/ê/ai is open. Unaccented e in le, de, je is a short, relaxed [ə] and often disappears.",
+      "words": ["été", "être", "parler", "parlez", "lait", "les", "fait", "fée", "le", "les"]
+    },
+    {
+      "id": "silent-endings",
+      "title": "Silent endings: -ent, -s, -t, -x, -d",
+      "tip": "Final consonants are usually silent (except often c, r, f, l: think CaReFuL). The verb ending -ent is never pronounced: ils parlent = il parle.",
+      "words": ["ils parlent", "souvent", "petit", "grand", "heureux", "avec", "sec", "neuf", "bal", "nez"]
+    },
+    {
+      "id": "liaison",
+      "title": "Liaison and enchaînement",
+      "tip": "A silent final consonant is pronounced before a vowel in fixed groups: les_amis [z], un_enfant [n], petit_ami [t]. Never after et.",
+      "words": ["les amis", "vous avez", "un enfant", "petit ami", "deux heures", "ils ont", "ils sont", "très important"]
+    },
+    {
+      "id": "eu",
+      "title": "eu: closed [ø] vs open [œ]",
+      "tip": "Closed [ø] at the end of a syllable (deux, peu); open [œ] before a pronounced consonant (peur, sœur). Both have rounded lips.",
+      "words": ["deux", "peu", "jeu", "peur", "sœur", "heure", "bleu", "fleur", "eux", "œuf"]
+    },
+    {
+      "id": "r-francais",
+      "title": "The French R",
+      "tip": "Made at the back of the throat, like a soft gargle; not the Spanish tapped or rolled r. Start with gr, tr, then final -re.",
+      "words": ["rouge", "Paris", "très", "grand", "trois", "rare", "pourquoi", "frère", "arriver", "rire"]
+    },
+    {
+      "id": "spelling-ai-oi",
+      "title": "Spelling vs sound: oi, ai, au, eau, gn, ill",
+      "tip": "oi = [wa], ai = [ɛ], au/eau = [o], gn = [ɲ] (like Spanish ñ), ill = [j] (mostly).",
+      "words": ["moi", "boîte", "maison", "chaud", "beau", "gagner", "montagne", "fille", "travailler", "ville"]
+    }
+  ]
+}

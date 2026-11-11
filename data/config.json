@@ -1,7 +1,7 @@
 {
   "_comment": "Session settings. Edit freely, then reload the page. Run `npm test` to check for typos.",
   "schemaVersion": 1,
-  "startDate": "2026-11-16",
+  "startDate": "2026-11-11",
   "sessionStart": "17:30",
   "blocks": {
     "anki": { "minutes": 10 },
@@ -23,5 +23,23 @@
       { "label": "AnkiWeb", "url": "https://ankiweb.net" },
       { "label": "Anki desktop", "url": "https://apps.ankiweb.net" }
     ]
-  }
+  },
+  "correctionPrompt": [
+    "You are my French tutor. My level is between A2 and B1 and I'm working toward B2. I also speak Spanish and English, so point out mistakes that come from those languages (false friends, word order, gender).",
+    "",
+    "Please correct the French text below:",
+    "1. Give the fully corrected version.",
+    "2. List each mistake as: original → correction, with a one-line explanation in English.",
+    "3. Point out anything grammatically fine but unnatural, and give a more idiomatic phrasing.",
+    "4. Finish with the 3 things I should focus on next time.",
+    "Keep my meaning and roughly my level; push me slightly toward B2, don't rewrite it as a native essay.",
+    "",
+    "Writing prompt: {prompt}",
+    "Grammar topic I'm studying: {grammar}",
+    "",
+    "My text:",
+    "\"\"\"",
+    "{text}",
+    "\"\"\""
+  ]
 }

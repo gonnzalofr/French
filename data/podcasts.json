@@ -1,0 +1,95 @@
+{
+  "_comment": "Listening rotation. The app picks the least-used item each day; 'Pick another' moves down the list. Set verify:false once you've checked a link. type: podcast | youtube | radio | show. level is a rough CEFR label.",
+  "items": [
+    {
+      "id": "innerfrench",
+      "name": "InnerFrench podcast",
+      "url": "https://innerfrench.com",
+      "type": "podcast",
+      "level": "B1",
+      "notes": "Slow, clear French on interesting topics. The best default for your level.",
+      "verify": false
+    },
+    {
+      "id": "rfi-facile",
+      "name": "RFI · Journal en français facile",
+      "url": "https://francaisfacile.rfi.fr",
+      "type": "radio",
+      "level": "B1",
+      "notes": "10-minute news bulletin in simple French, with transcripts. Listen once without, once with the transcript.",
+      "verify": false
+    },
+    {
+      "id": "easy-french-yt",
+      "name": "Easy French (YouTube)",
+      "url": "https://www.youtube.com/@EasyFrench",
+      "type": "youtube",
+      "level": "B1",
+      "notes": "Street interviews with French and English subtitles. Real, fast, everyday speech.",
+      "verify": true
+    },
+    {
+      "id": "coffee-break-french",
+      "name": "Coffee Break French",
+      "url": "https://coffeebreaklanguages.com/coffeebreakfrench/",
+      "type": "podcast",
+      "level": "A2",
+      "notes": "Structured lessons. Use the later seasons; earlier ones will feel too easy.",
+      "verify": true
+    },
+    {
+      "id": "netflix-lr",
+      "name": "A French show on Netflix + Language Reactor",
+      "url": "https://www.languagereactor.com",
+      "type": "show",
+      "level": "B2",
+      "notes": "French audio, French subtitles, English below. Ideas: Lupin, Dix pour cent (Call My Agent!), Le Bureau des légendes. Availability varies by country.",
+      "verify": false
+    },
+    {
+      "id": "tv5monde-apprendre",
+      "name": "TV5Monde · Apprendre le français",
+      "url": "https://apprendre.tv5monde.com",
+      "type": "show",
+      "level": "B1",
+      "notes": "Short news and culture videos with comprehension exercises, sorted by level.",
+      "verify": false
+    },
+    {
+      "id": "easy-french-pod",
+      "name": "Easy French Podcast",
+      "url": "https://www.easyfrenchpod.com",
+      "type": "podcast",
+      "level": "B1",
+      "notes": "Two hosts chatting in natural French about daily life in France.",
+      "verify": true
+    },
+    {
+      "id": "francais-authentique",
+      "name": "Français Authentique",
+      "url": "https://www.francaisauthentique.com",
+      "type": "podcast",
+      "level": "B1",
+      "notes": "Clear, slightly slow French focused on spoken expressions.",
+      "verify": true
+    },
+    {
+      "id": "duolingo-french-pod",
+      "name": "Duolingo French Podcast",
+      "url": "https://podcast.duolingo.com",
+      "type": "podcast",
+      "level": "B1",
+      "notes": "True stories told in easy French with short English narration.",
+      "verify": true
+    },
+    {
+      "id": "france-culture",
+      "name": "France Culture",
+      "url": "https://www.radiofrance.fr/franceculture",
+      "type": "radio",
+      "level": "B2",
+      "notes": "Native-speed radio. A stretch goal: pick a short segment on a topic you know well.",
+      "verify": true
+    }
+  ]
+}

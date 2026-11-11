@@ -1,0 +1,25 @@
+{
+  "_comment": "False friends shown during Sunday review (two per week). with: en | es says which of your languages it tricks you in.",
+  "items": [
+    { "id": "ff-actuellement", "fr": "actuellement", "means": "currently, at the moment", "trap": "actually (= en fait)", "with": "en" },
+    { "id": "ff-eventuellement", "fr": "éventuellement", "means": "possibly, if need be", "trap": "eventually (= finalement)", "with": "en" },
+    { "id": "ff-assister", "fr": "assister à", "means": "to attend", "trap": "to assist (= aider)", "with": "en" },
+    { "id": "ff-librairie", "fr": "une librairie", "means": "a bookshop", "trap": "a library (= une bibliothèque)", "with": "en" },
+    { "id": "ff-sensible", "fr": "sensible", "means": "sensitive", "trap": "sensible (= raisonnable)", "with": "en" },
+    { "id": "ff-location", "fr": "une location", "means": "a rental", "trap": "a location (= un emplacement, un lieu)", "with": "en" },
+    { "id": "ff-rester", "fr": "rester", "means": "to stay, to remain", "trap": "to rest (= se reposer)", "with": "en" },
+    { "id": "ff-attendre", "fr": "attendre", "means": "to wait (for)", "trap": "to attend (= assister à)", "with": "en" },
+    { "id": "ff-blesser", "fr": "blesser", "means": "to injure, to hurt", "trap": "to bless (= bénir)", "with": "en" },
+    { "id": "ff-monnaie", "fr": "la monnaie", "means": "change (coins), currency", "trap": "money (= l'argent)", "with": "en" },
+    { "id": "ff-salir", "fr": "salir", "means": "to make dirty", "trap": "salir in Spanish = to go out (= sortir)", "with": "es" },
+    { "id": "ff-large", "fr": "large", "means": "wide", "trap": "largo in Spanish = long (= long)", "with": "es" },
+    { "id": "ff-subir", "fr": "subir", "means": "to undergo, to suffer", "trap": "subir in Spanish = to go up (= monter)", "with": "es" },
+    { "id": "ff-nombre", "fr": "le nombre", "means": "the number (amount)", "trap": "nombre in Spanish = name (= le nom)", "with": "es" },
+    { "id": "ff-constipe", "fr": "constipé", "means": "constipated", "trap": "constipado in Spanish = having a cold (= enrhumé)", "with": "es" },
+    { "id": "ff-carte", "fr": "une carte", "means": "a card, a map, a menu", "trap": "carta in Spanish = a letter (= une lettre)", "with": "es" },
+    { "id": "ff-embarrasse", "fr": "embarrassé", "means": "embarrassed, awkward", "trap": "embarazada in Spanish = pregnant (= enceinte)", "with": "es" },
+    { "id": "ff-robe", "fr": "une robe", "means": "a dress", "trap": "ropa in Spanish = clothes (= les vêtements)", "with": "es" },
+    { "id": "ff-preservatif", "fr": "un préservatif", "means": "a condom", "trap": "a preservative (= un conservateur)", "with": "en" },
+    { "id": "ff-coin", "fr": "un coin", "means": "a corner", "trap": "a coin (= une pièce)", "with": "en" }
+  ]
+}

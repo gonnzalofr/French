@@ -1,0 +1,10 @@
+# Personal data exported from the app. This repo is public: never commit it.
+backups/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+node_modules/

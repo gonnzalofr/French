@@ -1,0 +1,11 @@
+{
+  "name": "french-daily",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local, single-user dashboard for a daily 60-minute French session.",
+  "type": "module",
+  "scripts": {
+    "start": "python -m http.server 8765 --bind 127.0.0.1",
+    "test": "node --test"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "_comment": "Session settings. Edit freely, then reload the page. Run `npm test` to check for typos.",
+  "schemaVersion": 1,
+  "startDate": "2026-11-16",
+  "sessionStart": "17:30",
+  "blocks": {
+    "anki": { "minutes": 10 },
+    "listening": { "minutes": 25 },
+    "focus": { "minutes": 20 },
+    "log": { "minutes": 5 }
+  },
+  "focusByWeekday": {
+    "mon": "grammar-learn",
+    "tue": "speaking",
+    "wed": "writing",
+    "thu": "grammar-drill",
+    "fri": "speaking",
+    "sat": "writing",
+    "sun": "review"
+  },
+  "anki": {
+    "links": [
+      { "label": "AnkiWeb", "url": "https://ankiweb.net" },
+      { "label": "Anki desktop", "url": "https://apps.ankiweb.net" }
+    ]
+  }
+}

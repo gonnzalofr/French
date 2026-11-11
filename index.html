@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>French Daily</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='1' height='2' fill='%23002395'/%3E%3Crect x='1' width='1' height='2' fill='%23fff'/%3E%3Crect x='2' width='1' height='2' fill='%23ed2939'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script type="module" src="js/main.js"></script>
+  </head>
+  <body>
+    <header class="site-head">
+      <h1 class="brand">French Daily</h1>
+      <nav aria-label="Main">
+        <a href="#/today" data-route="today">Today</a>
+        <a href="#/history" data-route="history">History</a>
+        <a href="#/settings" data-route="settings">Settings</a>
+      </nav>
+    </header>
+
+    <div id="error" class="error" role="alert" hidden>
+      <strong>Couldn't load the app.</strong>
+      <p data-message></p>
+    </div>
+
+    <main id="main" tabindex="-1">
+      <p class="muted">Loading…</p>
+    </main>
+
+    <noscript>This app needs JavaScript.</noscript>
+  </body>
+</html>

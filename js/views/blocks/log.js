@@ -1,4 +1,7 @@
 import { h, autosaveField } from "../../dom.js";
+import { parseLocalDate } from "../../schedule.js";
+
+const dayFmt = new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long" });
 
 export function logBlock({ state, day, iso, save, onCleanup }) {
   const log = day.blocks.log;
@@ -35,7 +38,7 @@ export function logBlock({ state, day, iso, save, onCleanup }) {
       ? h(
           "p",
           { class: "callout" },
-          h("strong", {}, `Last time (${previous}) you wanted to fix: `),
+          h("strong", {}, "Last time ", h("span", { lang: "fr" }, `(${dayFmt.format(parseLocalDate(previous))})`), " you wanted to fix: "),
           state.days[previous].blocks.log.fixNext,
         )
       : null,

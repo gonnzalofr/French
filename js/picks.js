@@ -8,7 +8,7 @@
  * Count how often each id was used on days strictly before `beforeIso`.
  * @param {object} days state.days
  * @param {string} beforeIso
- * @param {(day:object)=>string|null|undefined} getId returns the id used that day, or nothing
+ * @param {(day:object)=>string|string[]|null|undefined} getId the id(s) used that day, or nothing
  * @returns {{counts: Map<string,number>, last: Map<string,string>}}
  */
 export function usageBefore(days, beforeIso, getId) {
@@ -16,10 +16,12 @@ export function usageBefore(days, beforeIso, getId) {
   const last = new Map();
   for (const iso of Object.keys(days).sort()) {
     if (iso >= beforeIso) break;
-    const id = getId(days[iso]);
-    if (!id) continue;
-    counts.set(id, (counts.get(id) ?? 0) + 1);
-    last.set(id, iso);
+    const got = getId(days[iso]);
+    for (const id of Array.isArray(got) ? got : [got]) {
+      if (!id) continue;
+      counts.set(id, (counts.get(id) ?? 0) + 1);
+      last.set(id, iso);
+    }
   }
   return { counts, last };
 }

@@ -44,40 +44,60 @@ function stat(value, label) {
   return h("div", { class: "stat" }, h("span", { class: "stat-value" }, value), h("span", { class: "stat-label" }, label));
 }
 
+const monthFmt = new Intl.DateTimeFormat("fr-FR", { month: "short" });
+const WEEKDAY_LETTERS = ["L", "M", "M", "J", "V", "S", "D"];
+const WEEKS_SHOWN = 20;
+
 function calendar(days, todayIso) {
-  const weeks = calendarWeeks(todayIso, 12);
+  const weeks = calendarWeeks(todayIso, WEEKS_SHOWN);
   const status = (iso) =>
     iso > todayIso ? "future" : isComplete(days[iso]) ? "complete" : hasActivity(days[iso]) ? "partial" : "none";
   const label = { complete: "full session", partial: "partial", none: "no session", future: "" };
 
+  // Month name above the first week that starts in a new month.
+  // Skip a label that would crowd the previous one (e.g. a month that only
+  // shows its last week in the first column).
+  let prevMonth = null;
+  let lastLabelled = -Infinity;
+  const monthRow = weeks.map((week, col) => {
+    const m = parseLocalDate(week[0]).getMonth();
+    const isNew = m !== prevMonth;
+    prevMonth = m;
+    const room = col - lastLabelled >= 3 && (col > 0 || parseLocalDate(weeks[2][0]).getMonth() === m);
+    if (!isNew || !room) return h("span", { class: "cal-month" });
+    lastLabelled = col;
+    return h("span", { class: "cal-month" }, monthFmt.format(parseLocalDate(week[0])).replace(".", ""));
+  });
+
+  const grid = h(
+    "div",
+    { class: "calendar", style: `--weeks:${WEEKS_SHOWN}` },
+    h("span", { class: "cal-corner" }),
+    monthRow,
+    WEEKDAY_LETTERS.map((letter, row) => [
+      h("span", { class: "cal-weekday", "aria-hidden": "true" }, row % 2 === 0 ? letter : ""),
+      weeks.map((week) => {
+        const iso = week[row];
+        const s = status(iso);
+        return s === "future"
+          ? h("span", { class: "cal-day", "data-status": s, "aria-hidden": "true" })
+          : h("a", {
+              class: "cal-day",
+              href: `#/today?date=${iso}`,
+              "data-status": s,
+              "data-today": iso === todayIso,
+              title: `${iso}: ${label[s]}`,
+              "aria-label": `${iso}: ${label[s]}`,
+            });
+      }),
+    ]),
+  );
+
   return h(
     "div",
     { class: "card" },
-    h("h3", {}, "Last 12 weeks"),
-    h(
-      "div",
-      { class: "calendar", role: "list", "aria-label": "Sessions in the last 12 weeks, one column per week" },
-      weeks.map((week) =>
-        h(
-          "div",
-          { class: "cal-week", role: "presentation" },
-          week.map((iso) => {
-            const s = status(iso);
-            return s === "future"
-              ? h("span", { class: "cal-day", "data-status": s, "aria-hidden": "true" })
-              : h("a", {
-                  class: "cal-day",
-                  role: "listitem",
-                  href: `#/today?date=${iso}`,
-                  "data-status": s,
-                  "data-today": iso === todayIso,
-                  title: `${iso}: ${label[s]}`,
-                  "aria-label": `${iso}: ${label[s]}`,
-                });
-          }),
-        ),
-      ),
-    ),
+    h("h3", {}, `Last ${WEEKS_SHOWN} weeks`),
+    grid,
     h(
       "p",
       { class: "legend muted" },
@@ -179,6 +199,7 @@ function dayEntry(iso, day, content) {
     ["Grammar", topic ? `${topic.title}${F.verdict ? ` (${F.verdict === "got-it" ? "got it" : "again"})` : ""}` : null],
     ["Prompt", prompt?.prompt],
     ["Ratings", ratings.length ? ratings.map(([k, v]) => `${k} ${v}/5`).join(", ") : null],
+    ["Dictée", F.dictation?.length ? `${F.dictation.reduce((n, r) => n + r.correct, 0)}/${F.dictation.reduce((n, r) => n + r.total, 0)} words right` : null],
     ["Recordings", F.recordingIds?.length ? `${F.recordingIds.length}` : null],
     ["Text", F.text?.trim() ? F.text.trim() : null],
     ["Notes", F.notes?.trim() || null],

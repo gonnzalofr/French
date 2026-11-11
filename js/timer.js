@@ -28,9 +28,9 @@ export function pauseTimer(t, now = Date.now()) {
 /**
  * DOM timer widget.
  * @param {{label:string, totalMs:number, state:TimerState|undefined, onChange:(s:TimerState)=>void,
- *          onStart?:()=>void, onFinish?:()=>void}} opts
+ *          onStart?:()=>void, onFinish?:()=>void, onTick?:(leftMs:number, running:boolean)=>void}} opts
  */
-export function createTimer({ label, totalMs, state, onChange, onStart, onFinish }) {
+export function createTimer({ label, totalMs, state, onChange, onStart, onFinish, onTick }) {
   let t = state ?? { remainingMs: totalMs, runningSince: null };
   let interval = null;
   const originalTitle = document.title;
@@ -62,6 +62,7 @@ export function createTimer({ label, totalMs, state, onChange, onStart, onFinish
     startBtn.disabled = left === 0;
     el.dataset.state = running ? "running" : left === 0 ? "finished" : "idle";
     if (running) document.title = `${formatMs(left)} · ${label}`;
+    onTick?.(left, running);
   }
 
   function tick() {
@@ -121,6 +122,8 @@ export function createTimer({ label, totalMs, state, onChange, onStart, onFinish
     el,
     pause,
     isRunning: () => Boolean(t.runningSince),
+    remaining: () => remainingMs(t),
+    toggle,
     destroy: stopTicking,
   };
 }

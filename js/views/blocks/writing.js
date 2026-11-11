@@ -1,6 +1,9 @@
-import { h, autosaveField, actionButton, copyText, extLink, tag } from "../../dom.js";
+import { h, autosaveField, actionButton, copyText, extLink, tag, fill } from "../../dom.js";
 import { findById } from "../../content.js";
 import { buildCorrectionPrompt, countWords, currentTopic, pickAnother } from "../../day.js";
+import { addMistake, parseCorrections } from "../../mistakes.js";
+import { accentBar } from "../parts/accent-bar.js";
+import { dictationPanel } from "../parts/dictation-panel.js";
 
 const DEFAULT_TEMPLATE = [
   "Please correct my French text. List each mistake with a short explanation in English.",
@@ -18,7 +21,7 @@ export function writingBlock({ config, content, day, state, iso, save, onCleanup
 
   function paintPrompt() {
     const p = prompt();
-    promptBox.replaceChildren(
+    fill(promptBox,
       h("p", { class: "prompt", lang: "fr" }, p.prompt),
       h(
         "p",
@@ -69,6 +72,7 @@ export function writingBlock({ config, content, day, state, iso, save, onCleanup
   });
   // autosaveField turns spellcheck on for lang fields; turn it back off here.
   text.textarea.spellcheck = false;
+  text.el.insertBefore(accentBar(() => text.textarea), text.textarea);
   onCleanup(text.dispose);
   paintCount(F.text);
 
@@ -93,20 +97,55 @@ export function writingBlock({ config, content, day, state, iso, save, onCleanup
 
   const corrections = autosaveField({
     id: `corrections-${iso}`,
-    label: "Corrections to remember",
-    hint: "Paste or note the 2–3 corrections that matter most. They show up in Sunday's review.",
+    label: "Claude’s corrections",
+    hint: "Paste the list of mistakes from Claude’s reply (lines like: original → correction — why). They also show up in Sunday’s review.",
     value: F.corrections,
-    rows: 4,
+    rows: 5,
+    lang: "fr",
     onSave: (v) => {
       F.corrections = v;
       save();
     },
   });
+  corrections.textarea.spellcheck = false;
   onCleanup(corrections.dispose);
+
+  const importStatus = h("span", { class: "field-hint", "aria-live": "polite" });
+  const importBtn = h(
+    "button",
+    {
+      type: "button",
+      class: "btn btn-small",
+      onclick: () => {
+        corrections.flush();
+        const found = parseCorrections(F.corrections);
+        if (!found.length) {
+          importStatus.textContent = "No “original → correction” lines found.";
+          return;
+        }
+        const added = found.map((m) => addMistake(state.mistakes, { ...m, source: "writing" }, iso)).filter(Boolean);
+        save();
+        fill(importStatus,
+          `Added ${added.length} to `,
+          h("a", { href: "#/mistakes" }, "your mistakes"),
+          ".",
+        );
+      },
+    },
+    "Add to my mistakes",
+  );
+
+  const warmup = h(
+    "details",
+    { class: "warmup", open: !F.dictation?.length || F.dictation.length < (F.dictationIds?.length ?? 0) },
+    h("summary", {}, "Warm-up (5 min): dictée"),
+    dictationPanel({ state, iso, F, content, save, onCleanup }),
+  );
 
   return h(
     "div",
     {},
+    warmup,
     promptBox,
     text.el,
     h(
@@ -123,5 +162,6 @@ export function writingBlock({ config, content, day, state, iso, save, onCleanup
       ", read the corrections, then rewrite the sentences you got wrong.",
     ),
     corrections.el,
+    h("div", { class: "row" }, importBtn, importStatus),
   );
 }

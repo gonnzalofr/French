@@ -3,15 +3,15 @@
   "searchUrl": "https://www.google.com/search?q=",
   "sites": {
     "learn": [
-      { "label": "Lawless French", "url": "https://www.lawlessfrench.com", "verify": false },
-      { "label": "Kwiziq French", "url": "https://french.kwiziq.com", "verify": false },
-      { "label": "TV5Monde Apprendre", "url": "https://apprendre.tv5monde.com", "verify": false }
+      { "label": "Lawless French", "url": "https://www.lawlessfrench.com", "verify": false},
+      { "label": "Kwiziq French", "url": "https://french.kwiziq.com", "verify": false},
+      { "label": "TV5Monde Apprendre", "url": "https://apprendre.tv5monde.com", "verify": false}
     ],
     "drill": [
-      { "label": "Le Point du FLE", "url": "https://www.lepointdufle.net", "verify": false },
-      { "label": "Français facile", "url": "https://www.francaisfacile.com", "verify": false },
-      { "label": "Kwiziq French", "url": "https://french.kwiziq.com", "verify": false },
-      { "label": "Bonjour de France", "url": "https://www.bonjourdefrance.com", "verify": true }
+      { "label": "Le Point du FLE", "url": "https://www.lepointdufle.net", "verify": false},
+      { "label": "Français facile", "url": "https://www.francaisfacile.com", "verify": false},
+      { "label": "Kwiziq French", "url": "https://french.kwiziq.com", "verify": false},
+      { "label": "Bonjour de France", "url": "https://www.bonjourdefrance.com", "verify": false}
     ]
   },
   "topics": [
@@ -29,7 +29,10 @@
       ],
       "examples": [
         { "fr": "Il pleuvait quand je suis sorti.", "en": "It was raining when I went out." },
-        { "fr": "Quand j'étais petit, je jouais au foot tous les samedis.", "en": "When I was little, I used to play football every Saturday." }
+        {
+          "fr": "Quand j'étais petit, je jouais au foot tous les samedis.",
+          "en": "When I was little, I used to play football every Saturday."
+        }
       ]
     },
     {
@@ -46,7 +49,10 @@
       ],
       "examples": [
         { "fr": "Elles sont parties tôt.", "en": "They left early." },
-        { "fr": "Les lettres que j'ai écrites sont sur la table.", "en": "The letters I wrote are on the table." }
+        {
+          "fr": "Les lettres que j'ai écrites sont sur la table.",
+          "en": "The letters I wrote are on the table."
+        }
       ]
     },
     {
@@ -62,8 +68,14 @@
         "Watch verbs that differ from Spanish/English: téléphoner à quelqu'un → je lui téléphone."
       ],
       "examples": [
-        { "fr": "Tu as vu Marie ? Oui, je l'ai vue hier.", "en": "Did you see Marie? Yes, I saw her yesterday." },
-        { "fr": "J'ai parlé à mes parents. Je leur ai tout expliqué.", "en": "I talked to my parents. I explained everything to them." }
+        {
+          "fr": "Tu as vu Marie ? Oui, je l'ai vue hier.",
+          "en": "Did you see Marie? Yes, I saw her yesterday."
+        },
+        {
+          "fr": "J'ai parlé à mes parents. Je leur ai tout expliqué.",
+          "en": "I talked to my parents. I explained everything to them."
+        }
       ]
     },
     {
@@ -79,8 +91,14 @@
         "Fixed expressions: il y a, on y va, je m'en vais, j'en ai marre."
       ],
       "examples": [
-        { "fr": "Tu vas à Paris ? Oui, j'y vais demain.", "en": "Are you going to Paris? Yes, I'm going there tomorrow." },
-        { "fr": "Tu as des frères ? Oui, j'en ai deux.", "en": "Do you have brothers? Yes, I have two (of them)." }
+        {
+          "fr": "Tu vas à Paris ? Oui, j'y vais demain.",
+          "en": "Are you going to Paris? Yes, I'm going there tomorrow."
+        },
+        {
+          "fr": "Tu as des frères ? Oui, j'en ai deux.",
+          "en": "Do you have brothers? Yes, I have two (of them)."
+        }
       ]
     },
     {
@@ -113,8 +131,14 @@
         "Practise aloud: these clusters are a pronunciation drill too."
       ],
       "examples": [
-        { "fr": "Tu me prêtes ton vélo ? Oui, je te le prête.", "en": "Will you lend me your bike? Yes, I'll lend it to you." },
-        { "fr": "Il a donné les clés à sa sœur ? Oui, il les lui a données.", "en": "Did he give the keys to his sister? Yes, he gave them to her." }
+        {
+          "fr": "Tu me prêtes ton vélo ? Oui, je te le prête.",
+          "en": "Will you lend me your bike? Yes, I'll lend it to you."
+        },
+        {
+          "fr": "Il a donné les clés à sa sœur ? Oui, il les lui a données.",
+          "en": "Did he give the keys to his sister? Yes, he gave them to her."
+        }
       ]
     },
     {
@@ -147,7 +171,10 @@
         "Needed later for si + plus-que-parfait (regrets)."
       ],
       "examples": [
-        { "fr": "Quand je suis arrivé, le train était déjà parti.", "en": "When I arrived, the train had already left." },
+        {
+          "fr": "Quand je suis arrivé, le train était déjà parti.",
+          "en": "When I arrived, the train had already left."
+        },
         { "fr": "Elle m'a dit qu'elle avait fini.", "en": "She told me she had finished." }
       ]
     },
@@ -165,7 +192,10 @@
       ],
       "examples": [
         { "fr": "Je vais appeler ma mère ce soir.", "en": "I'm going to call my mother tonight." },
-        { "fr": "Quand je serai ingénieur, je travaillerai à l'étranger.", "en": "When I'm an engineer, I'll work abroad." }
+        {
+          "fr": "Quand je serai ingénieur, je travaillerai à l'étranger.",
+          "en": "When I'm an engineer, I'll work abroad."
+        }
       ]
     },
     {
@@ -198,7 +228,10 @@
         "Never put the conditional right after si (unlike some Spanish/English slips)."
       ],
       "examples": [
-        { "fr": "Si j'étais riche, j'achèterais une maison à la mer.", "en": "If I were rich, I'd buy a house by the sea." },
+        {
+          "fr": "Si j'étais riche, j'achèterais une maison à la mer.",
+          "en": "If I were rich, I'd buy a house by the sea."
+        },
         { "fr": "S'il pleut demain, on restera chez nous.", "en": "If it rains tomorrow, we'll stay home." }
       ]
     },
@@ -267,7 +300,10 @@
       ],
       "examples": [
         { "fr": "C'est la raison pour laquelle je suis venu.", "en": "That's the reason why I came." },
-        { "fr": "Le problème auquel nous réfléchissons est complexe.", "en": "The problem we're thinking about is complex." }
+        {
+          "fr": "Le problème auquel nous réfléchissons est complexe.",
+          "en": "The problem we're thinking about is complex."
+        }
       ]
     },
     {
@@ -284,7 +320,10 @@
       ],
       "examples": [
         { "fr": "Le courrier est distribué tous les matins.", "en": "The mail is delivered every morning." },
-        { "fr": "Ce roman a été traduit en vingt langues.", "en": "This novel has been translated into twenty languages." }
+        {
+          "fr": "Ce roman a été traduit en vingt langues.",
+          "en": "This novel has been translated into twenty languages."
+        }
       ]
     },
     {
@@ -301,7 +340,10 @@
       ],
       "examples": [
         { "fr": "Il s'est cassé la jambe en skiant.", "en": "He broke his leg skiing." },
-        { "fr": "En travaillant tous les jours, tu progresseras.", "en": "By working every day, you'll improve." }
+        {
+          "fr": "En travaillant tous les jours, tu progresseras.",
+          "en": "By working every day, you'll improve."
+        }
       ]
     },
     {
@@ -334,8 +376,14 @@
         "Addition and structure: d'abord, ensuite, de plus, enfin, en conclusion."
       ],
       "examples": [
-        { "fr": "Comme il pleuvait, nous sommes restés à la maison.", "en": "As it was raining, we stayed at home." },
-        { "fr": "Bien qu'il soit fatigué, il continue à travailler.", "en": "Although he's tired, he keeps working." }
+        {
+          "fr": "Comme il pleuvait, nous sommes restés à la maison.",
+          "en": "As it was raining, we stayed at home."
+        },
+        {
+          "fr": "Bien qu'il soit fatigué, il continue à travailler.",
+          "en": "Although he's tired, he keeps working."
+        }
       ]
     }
   ]

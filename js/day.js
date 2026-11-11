@@ -1,7 +1,7 @@
 // Creating a day's record and the state changes that span several modules.
 // Pure: takes the state object and mutates it; the caller saves.
 import { findById } from "./content.js";
-import { pickAfter, pickBest, usageBefore } from "./picks.js";
+import { pickAfter, pickBest, rankItems, usageBefore } from "./picks.js";
 import { focusForDate, parseLocalDate } from "./schedule.js";
 
 export const CORE_BLOCKS = ["anki", "listening", "focus"];
@@ -22,7 +22,11 @@ const used = {
   speaking: (d) => d.focusType === "speaking" && d.blocks?.focus?.done && d.blocks.focus.promptId,
   writing: (d) => d.focusType === "writing" && d.blocks?.focus?.done && d.blocks.focus.promptId,
   drill: (d) => d.focusType === "speaking" && d.blocks?.focus?.done && d.blocks.focus.drillId,
+  // A dictée sentence counts as used once you've checked it, done box or not.
+  dictation: (d) => (d.blocks?.focus?.dictation ?? []).map((r) => r.id),
 };
+
+export const DICTATION_PER_DAY = 3;
 
 function usage(state, iso, kind) {
   return usageBefore(state.days, iso, used[kind]);
@@ -76,6 +80,13 @@ export function ensureDay(state, iso, { config, content, todayIso = iso }) {
       F.promptId = pickBest(content.writing.items, usage(state, iso, "writing"), topic.id).id;
     }
     F.text ??= "";
+    const known = (F.dictationIds ?? []).filter((id) => findById(content.dictation.items, id));
+    if (known.length < Math.min(DICTATION_PER_DAY, content.dictation.items.length)) {
+      F.dictationIds = rankItems(content.dictation.items, usage(state, iso, "dictation"))
+        .slice(0, DICTATION_PER_DAY)
+        .map((i) => i.id);
+    }
+    F.dictation ??= [];
   } else {
     F.notes ??= "";
   }
@@ -137,7 +148,8 @@ export function hasActivity(day) {
     Object.values(b).some((x) => x?.done) ||
     (b.listening?.words?.length ?? 0) > 0 ||
     Boolean(b.focus?.text || b.focus?.notes || b.log?.wentWell || b.log?.fixNext) ||
-    (b.focus?.recordingIds?.length ?? 0) > 0
+    (b.focus?.recordingIds?.length ?? 0) > 0 ||
+    (b.focus?.dictation?.length ?? 0) > 0
   );
 }
 

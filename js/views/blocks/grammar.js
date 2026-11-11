@@ -96,9 +96,9 @@ function verdictPicker({ content, state, iso, F, topic, save }) {
     const { topic: next } = currentTopic(state, content);
     message.textContent =
       F.verdict === "got-it"
-        ? `Monday's topic: ${next.title}.`
+        ? `Monday’s topic: ${next.title}.`
         : F.verdict === "again"
-          ? `You'll stay on ${topic.title} next week.`
+          ? `You’ll stay on ${topic.title} next week.`
           : "";
   }
   paint();

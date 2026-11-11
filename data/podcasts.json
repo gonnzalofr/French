@@ -1,5 +1,5 @@
 {
-  "_comment": "Listening rotation. The app picks the least-used item each day; 'Pick another' moves down the list. Set verify:false once you've checked a link. type: podcast | youtube | radio | show. level is a rough CEFR label.",
+  "_comment": "Listening rotation. The app picks the least-used item each day; 'Pick another' moves down the list. Links were checked on 11 Nov 2026; set verify:true on any you add until you've checked them. type: podcast | youtube | radio | show. level is a rough CEFR label.",
   "items": [
     {
       "id": "innerfrench",
@@ -26,7 +26,7 @@
       "type": "youtube",
       "level": "B1",
       "notes": "Street interviews with French and English subtitles. Real, fast, everyday speech.",
-      "verify": true
+      "verify": false
     },
     {
       "id": "coffee-break-french",
@@ -35,7 +35,7 @@
       "type": "podcast",
       "level": "A2",
       "notes": "Structured lessons. Use the later seasons; earlier ones will feel too easy.",
-      "verify": true
+      "verify": false
     },
     {
       "id": "netflix-lr",
@@ -56,22 +56,13 @@
       "verify": false
     },
     {
-      "id": "easy-french-pod",
-      "name": "Easy French Podcast",
-      "url": "https://www.easyfrenchpod.com",
-      "type": "podcast",
-      "level": "B1",
-      "notes": "Two hosts chatting in natural French about daily life in France.",
-      "verify": true
-    },
-    {
       "id": "francais-authentique",
       "name": "Français Authentique",
       "url": "https://www.francaisauthentique.com",
       "type": "podcast",
       "level": "B1",
       "notes": "Clear, slightly slow French focused on spoken expressions.",
-      "verify": true
+      "verify": false
     },
     {
       "id": "duolingo-french-pod",
@@ -79,8 +70,8 @@
       "url": "https://podcast.duolingo.com",
       "type": "podcast",
       "level": "B1",
-      "notes": "True stories told in easy French with short English narration.",
-      "verify": true
+      "notes": "True stories told in easy French with short English narration. Duolingo says the series is being wound down, but the back catalogue is still a great B1 listen.",
+      "verify": false
     },
     {
       "id": "france-culture",
@@ -89,7 +80,7 @@
       "type": "radio",
       "level": "B2",
       "notes": "Native-speed radio. A stretch goal: pick a short segment on a topic you know well.",
-      "verify": true
+      "verify": false
     }
   ]
 }

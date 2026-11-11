@@ -59,7 +59,7 @@ test("corrupt saved data is kept aside, not lost", () => {
   const store = createStore(backend);
   store.load();
   assert.deepEqual(store.state.days, {});
-  assert.match(store.warning, /couldn't be read/);
+  assert.match(store.warning, /couldn['’]t be read/);
   const kept = [...backend.data.keys()].find((k) => k.startsWith(`${STORAGE_KEY}.unreadable-`));
   assert.equal(backend.data.get(kept), "{not json");
 });
@@ -80,8 +80,8 @@ test("backups round-trip and reject other files", () => {
   const parsed = parseBackup(text);
   assert.equal(parsed.exportedAt, "2026-11-20T10:00:00.000Z");
   assert.ok(parsed.state.days["2026-11-16"]);
-  assert.throws(() => parseBackup('{"hello":1}'), /isn't a French Daily backup/);
-  assert.throws(() => parseBackup("nope"), /isn't valid JSON/);
+  assert.throws(() => parseBackup('{"hello":1}'), /isn['’]t a French Daily backup/);
+  assert.throws(() => parseBackup("nope"), /isn['’]t valid JSON/);
 });
 
 // ---------- rotation ----------
@@ -301,4 +301,106 @@ test("recordings older than the keep window are pruned unless starred", () => {
     { id: "3", date: "2026-11-10", starred: false },
   ];
   assert.deepEqual(recordingsToPrune(recs, 14, "2026-11-20").map((r) => r.id), ["1"]);
+});
+
+// ---------- dictée ----------
+
+import { diffWords, scoreDiff, tokenize } from "../js/dictation.js";
+import { addMistake, gradeAnswer, mistakeStats, normalizeAnswer, parseCorrections, pickQuiz } from "../js/mistakes.js";
+
+test("dictée tokens ignore punctuation but keep elisions and hyphens", () => {
+  assert.deepEqual(tokenize("C’est son frère, et il est « gentil » !"), ["C'est", "son", "frère", "et", "il", "est", "gentil"]);
+  assert.deepEqual(tokenize("Ses grands-parents"), ["Ses", "grands-parents"]);
+});
+
+test("dictée diff finds wrong, missing and extra words", () => {
+  const ops = diffWords("Les filles que j'ai vues étaient contentes.", "les filles que j'ai vu etaient contente");
+  assert.deepEqual(
+    ops.filter((o) => o.type !== "same").map((o) => [o.type, o.expected, o.typed]),
+    [
+      ["wrong", "vues", "vu"],
+      ["wrong", "étaient", "etaient"],
+      ["wrong", "contentes", "contente"],
+    ],
+  );
+  assert.deepEqual(scoreDiff(ops), { correct: 4, total: 7, perfect: false });
+
+  const gaps = diffWords("Il a mangé à la maison.", "Il mangé à la la maison");
+  assert.deepEqual(gaps.map((o) => o.type), ["same", "missing", "same", "same", "same", "extra", "same"]);
+  assert.equal(scoreDiff(diffWords("Où est-il ?", "où est-il")).perfect, true);
+});
+
+test("writing days get three dictée sentences, fresh ones first", () => {
+  const state = emptyState();
+  const wed = ensureDay(state, "2026-11-18", { config, content });
+  assert.equal(wed.blocks.focus.dictationIds.length, 3);
+  wed.blocks.focus.dictation = wed.blocks.focus.dictationIds.map((id) => ({ id, typed: "", correct: 0, total: 1 }));
+  const sat = ensureDay(state, "2026-11-21", { config, content });
+  assert.equal(sat.blocks.focus.dictationIds.filter((id) => wed.blocks.focus.dictationIds.includes(id)).length, 0);
+});
+
+// ---------- mistakes ----------
+
+let n = 0;
+const makeId = () => `m${n++}`;
+
+test("adding the same mistake twice counts it instead of duplicating", () => {
+  const list = [];
+  addMistake(list, { wrong: "j'ai allé", right: "je suis allé" }, "2026-11-16", makeId);
+  const again = addMistake(list, { wrong: "J’ai allé", right: "je suis allé " }, "2026-11-18", makeId);
+  assert.equal(list.length, 1);
+  assert.equal(again.count, 2);
+  assert.equal(again.lastMade, "2026-11-18");
+  assert.equal(addMistake(list, { wrong: "x", right: "" }, "2026-11-18", makeId), null);
+  assert.equal(addMistake(list, { wrong: "Vues", right: "vues" }, "2026-11-18", makeId), null);
+});
+
+test("a mistake is mastered after correct answers on three different days", () => {
+  const list = [];
+  const m = addMistake(list, { wrong: "etaient", right: "étaient" }, "2026-11-10", makeId);
+  assert.equal(gradeAnswer(m, "étaient", "2026-11-11"), true);
+  assert.equal(gradeAnswer(m, "étaient", "2026-11-11"), true);
+  assert.equal(m.streak, 1, "same day doesn't count twice");
+  gradeAnswer(m, "Étaient", "2026-11-12");
+  assert.equal(m.mastered, false);
+  gradeAnswer(m, "étaient.", "2026-11-14");
+  assert.equal(m.mastered, true);
+  assert.deepEqual(mistakeStats(list), { total: 1, mastered: 1, active: 0 });
+  addMistake(list, { wrong: "etaient", right: "étaient" }, "2026-11-20", makeId);
+  assert.equal(m.mastered, false, "making it again brings it back");
+  assert.equal(gradeAnswer(m, "etaient", "2026-11-21"), false, "accents matter");
+});
+
+test("quiz picks the weakest, skips mastered and already-quizzed-today", () => {
+  const list = [];
+  const a = addMistake(list, { wrong: "a", right: "à" }, "2026-11-10", makeId);
+  const b = addMistake(list, { wrong: "ou", right: "où" }, "2026-11-11", makeId);
+  const c = addMistake(list, { wrong: "ces", right: "ses" }, "2026-11-12", makeId);
+  a.streak = 2;
+  c.mastered = true;
+  b.lastQuizzed = "2026-11-20";
+  assert.deepEqual(pickQuiz(list, 5, "2026-11-20").map((m) => m.right), ["à"]);
+  assert.deepEqual(pickQuiz(list, 5, "2026-11-21").map((m) => m.right), ["où", "à"]);
+});
+
+test("answers compare leniently on case, apostrophes and punctuation only", () => {
+  assert.equal(normalizeAnswer("  C’est  ÇA ! "), normalizeAnswer("c'est ça"));
+  assert.notEqual(normalizeAnswer("ca"), normalizeAnswer("ça"));
+});
+
+test("Claude's correction lines become mistakes", () => {
+  const text = [
+    "Here are the mistakes:",
+    "1. **je suis allé au cinéma avec mon amie** → je suis allée au cinéma — I'm a woman here? No: keep allé.",
+    "- « il a parti » → « il est parti » — partir uses être.",
+    "* les filles que j'ai vu -> les filles que j'ai vues: agreement with que",
+    "3. dans le weekend → le week-end (spelling)",
+    "No arrow on this line.",
+  ].join("\n");
+  assert.deepEqual(parseCorrections(text), [
+    { wrong: "je suis allé au cinéma avec mon amie", right: "je suis allée au cinéma", note: "I'm a woman here? No: keep allé." },
+    { wrong: "il a parti", right: "il est parti", note: "partir uses être." },
+    { wrong: "les filles que j'ai vu", right: "les filles que j'ai vues", note: "agreement with que" },
+    { wrong: "dans le weekend", right: "le week-end", note: "spelling" },
+  ]);
 });

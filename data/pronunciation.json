@@ -1,7 +1,7 @@
 {
   "_comment": "Two-minute pronunciation warm-ups shown on speaking days. audioUrl is a pattern; {word} is replaced by each word. Read each word aloud, then compare with a native speaker.",
   "audioUrl": "https://forvo.com/word/{word}/#fr",
-  "verify": true,
+  "verify": false,
   "drills": [
     {
       "id": "nasal-an-on",
@@ -43,7 +43,16 @@
       "id": "liaison",
       "title": "Liaison and enchaînement",
       "tip": "A silent final consonant is pronounced before a vowel in fixed groups: les_amis [z], un_enfant [n], petit_ami [t]. Never after et.",
-      "words": ["les amis", "vous avez", "un enfant", "petit ami", "deux heures", "ils ont", "ils sont", "très important"]
+      "words": [
+        "les amis",
+        "vous avez",
+        "un enfant",
+        "petit ami",
+        "deux heures",
+        "ils ont",
+        "ils sont",
+        "très important"
+      ]
     },
     {
       "id": "eu",

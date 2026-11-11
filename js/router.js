@@ -18,4 +18,5 @@ export function startRouter(routes, onRoute) {
   };
   window.addEventListener("hashchange", go);
   go();
+  return go; // lets the app re-render the current route
 }

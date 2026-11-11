@@ -14,7 +14,7 @@ export function recorderUnsupportedReason() {
     return "The microphone only works on a secure address. Open the app at http://localhost:8765.";
   }
   if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === "undefined") {
-    return "This browser can't record audio. Try a current Chrome, Edge or Firefox.";
+    return "This browser can’t record audio. Try a current Chrome, Edge or Firefox.";
   }
   return null;
 }
@@ -29,7 +29,7 @@ export function micErrorMessage(err) {
     case "NotReadableError":
       return "The microphone is busy in another app. Close it there and try again.";
     default:
-      return `Couldn't start recording: ${err?.message ?? err}`;
+      return `Couldn’t start recording: ${err?.message ?? err}`;
   }
 }
 

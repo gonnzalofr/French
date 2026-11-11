@@ -11,16 +11,20 @@
   </head>
   <body>
     <header class="site-head">
-      <h1 class="brand">French Daily</h1>
+      <h1 class="brand">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        French Daily
+      </h1>
       <nav aria-label="Main">
         <a href="#/today" data-route="today">Today</a>
+        <a href="#/mistakes" data-route="mistakes">Mistakes</a>
         <a href="#/history" data-route="history">History</a>
         <a href="#/settings" data-route="settings">Settings</a>
       </nav>
     </header>
 
     <div id="error" class="error" role="alert" hidden>
-      <strong>Couldn't load the app.</strong>
+      <strong>Couldn’t load the app.</strong>
       <p data-message></p>
     </div>
     <p id="warning" class="banner banner-warn" role="alert" hidden></p>

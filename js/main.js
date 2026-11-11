@@ -5,10 +5,12 @@ import { pruneRecordings } from "./recordings.js";
 import { toLocalISODate } from "./schedule.js";
 import { renderToday } from "./views/today.js";
 import { renderHistory } from "./views/history.js";
+import { renderMistakes } from "./views/mistakes.js";
 import { renderSettings } from "./views/settings.js";
 
 const routes = {
   today: renderToday,
+  mistakes: renderMistakes,
   history: renderHistory,
   settings: renderSettings,
 };
@@ -60,8 +62,12 @@ async function boot() {
   };
   const app = { config, content, store, onCleanup: (fn) => cleanups.push(fn) };
 
-  startRouter(routes, (render, params) => {
+  let renderedOn = toLocalISODate(new Date());
+  let showingToday = false;
+  const rerender = startRouter(routes, (render, params) => {
     runCleanups();
+    renderedOn = toLocalISODate(new Date());
+    showingToday = render === renderToday && !params.has("date");
     try {
       main.replaceChildren(render(app, params));
       main.focus({ preventScroll: true });
@@ -69,6 +75,16 @@ async function boot() {
     } catch (err) {
       showError(err);
     }
+  });
+
+  // If the tab stays open past midnight, move "Today" to the new day instead of
+  // writing tomorrow's session into yesterday's record.
+  const checkDate = () => {
+    if (showingToday && toLocalISODate(new Date()) !== renderedOn) rerender();
+  };
+  setInterval(checkDate, 60_000);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") checkDate();
   });
 }
 

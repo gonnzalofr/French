@@ -1,4 +1,4 @@
-import { h, autosaveField, extLink, tag } from "../../dom.js";
+import { h, autosaveField, extLink, tag, fill } from "../../dom.js";
 import { audioUrl, findById } from "../../content.js";
 import { pickAnother } from "../../day.js";
 import { formatMs } from "../../timer.js";
@@ -21,7 +21,7 @@ export function speakingBlock({ content, day, state, iso, save, onCleanup }) {
   const promptBox = h("div", { class: "prompt-box" });
   function paintPrompt() {
     const p = findById(content.speaking.items, F.promptId);
-    promptBox.replaceChildren(
+    fill(promptBox,
       h("p", { class: "prompt", lang: "fr" }, p.prompt),
       p.hint ? h("p", { class: "muted" }, p.hint, " ", p.level ? tag(p.level) : null) : null,
       h(
@@ -145,7 +145,7 @@ function recorderPanel({ F, iso, save, onCleanup }) {
       save();
       status.textContent = `Saved a ${formatMs(durationMs)} take.`;
     } catch (err) {
-      status.textContent = `Couldn't save the recording: ${err.message}`;
+      status.textContent = `Couldn’t save the recording: ${err.message}`;
     }
     paintList();
   }
@@ -157,10 +157,10 @@ function recorderPanel({ F, iso, save, onCleanup }) {
     try {
       recs = (await listRecordingsByDate(iso)).sort((a, b) => a.id.localeCompare(b.id));
     } catch (err) {
-      status.textContent = `Couldn't read recordings: ${err.message}`;
+      status.textContent = `Couldn’t read recordings: ${err.message}`;
     }
     urls.splice(0).forEach((u) => URL.revokeObjectURL(u));
-    list.replaceChildren(
+    fill(list,
       ...recs.map((r, i) => {
         const url = URL.createObjectURL(r.blob);
         urls.push(url);
@@ -184,7 +184,7 @@ function recorderPanel({ F, iso, save, onCleanup }) {
             type: "button",
             class: "btn btn-small btn-quiet",
             onclick: async () => {
-              if (!confirm(`Delete take ${i + 1}? This can't be undone.`)) return;
+              if (!confirm(`Delete take ${i + 1}? This can’t be undone.`)) return;
               await deleteRecording(r.id);
               F.recordingIds = F.recordingIds.filter((x) => x !== r.id);
               save();

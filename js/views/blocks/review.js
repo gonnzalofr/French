@@ -1,6 +1,7 @@
 import { h, autosaveField, extLink, actionButton, copyText } from "../../dom.js";
 import { currentTopic, topicStatus } from "../../day.js";
 import { itemsForWeek } from "../../picks.js";
+import { mistakesQuiz } from "../parts/mistakes-quiz.js";
 import { averageRatings, collectWords, weekSummary, wordsToAnki } from "../../streak.js";
 import { addDaysIso, daysBetween, FOCUS_TYPES, focusForDate, parseLocalDate, weekStartIso } from "../../schedule.js";
 
@@ -38,7 +39,7 @@ export function reviewBlock({ config, content, state, day, iso, save, onCleanup 
           "li",
           {},
           "Catch up on ",
-          h("a", { href: `#/today?date=${w.iso}` }, `${WEEKDAY_EN[w.weekday]}'s ${FOCUS_TYPES[w.focusType].label.toLowerCase()}`),
+          h("a", { href: `#/today?date=${w.iso}` }, `${WEEKDAY_EN[w.weekday]}’s ${FOCUS_TYPES[w.focusType].label.toLowerCase()}`),
           ".",
         ),
       );
@@ -56,7 +57,7 @@ export function reviewBlock({ config, content, state, day, iso, save, onCleanup 
   const status = topicStatus(state);
   const { topic } = currentTopic(state, content);
   if (status[topic.id] === "again") {
-    suggestions.push(h("li", {}, `Extra drill on ${topic.title}: it's carrying over to next week.`));
+    suggestions.push(h("li", {}, `Extra drill on ${topic.title}: it’s carrying over to next week.`));
   }
   const corrections = week.map((w) => w.day?.blocks?.focus?.corrections?.trim()).filter(Boolean);
   if (corrections.length) {
@@ -110,8 +111,8 @@ export function reviewBlock({ config, content, state, day, iso, save, onCleanup 
 
   // ---- free choice ----
   const ideas = [
-    "Re-listen to this week's hardest episode with the transcript.",
-    "Record Tuesday's prompt again and compare it with the first take.",
+    "Re-listen to this week’s hardest episode with the transcript.",
+    "Record Tuesday’s prompt again and compare it with the first take.",
     "Rewrite a corrected text from memory.",
     "Watch an episode of a French show with French subtitles only.",
   ];
@@ -130,6 +131,8 @@ export function reviewBlock({ config, content, state, day, iso, save, onCleanup 
   return h(
     "div",
     { class: "review" },
+    h("h4", {}, "Quiz on your mistakes (5 min)"),
+    mistakesQuiz({ state, iso, save, count: 8 }),
     h("h4", {}, "This week"),
     weekList,
     h("h4", {}, "Suggested catch-up"),

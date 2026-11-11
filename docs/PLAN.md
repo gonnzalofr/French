@@ -4,7 +4,8 @@ A local, single-user dashboard for one 60-minute French session a day
 (17:30–18:30). It runs on `http://localhost:8765`, keeps all data in the
 browser, and reads its content from plain JSON files you can edit by hand.
 
-Status: **All eight milestones built** (11 Nov 2026). The design questions
+Status: **All eight milestones built** (11 Nov 2026), plus milestone 9
+(redesign, dictée, mistakes list). The design questions
 were settled with the recommended defaults below; change any of them later by
 editing the code or `data/config.json`.
 
@@ -24,6 +25,10 @@ editing the code or `data/config.json`.
 | Timers | Don't auto-advance; the next unfinished block is highlighted. Starting one timer pauses the others. |
 | Pronunciation | A 3-minute warm-up drill (nasals, u/ou, silent endings, liaison, R…) on speaking days, with Forvo links. |
 | False friends | Two per week in Sunday review, for both English and Spanish traps. |
+| Layout | Focus mode: only the current block is open; a sticky 60-minute bar shows progress and the running timer. |
+| Type | UI in the system sans; French content in a system serif (Palatino/Georgia), so it works offline. |
+| Dictée voice | The browser's built-in speech synthesis. No audio files, no API; needs a French voice installed. |
+| Mistakes | Mastered after correct answers on 3 different days; making it again brings it back. |
 
 ---
 
@@ -47,6 +52,7 @@ Dependencies added: **none.**
 ```
 French/
 ├── index.html              App shell: header, nav, <main>, error and warning banners
+├── serve.py                Local server: http.server with caching off
 ├── package.json            "type": "module" + start/test scripts. No dependencies.
 ├── README.md               How to run, edit content, back up
 ├── .gitignore              Ignores backups/ (personal data) and OS junk
@@ -67,11 +73,19 @@ French/
 │   ├── recorder.js         MediaRecorder wrapper with codec detection
 │   ├── timer.js            Timestamp-based countdown widget
 │   ├── sound.js            Web Audio chime (no audio file)
+│   ├── speech.js           French text-to-speech for the dictée
+│   ├── dictation.js        PURE: word-level diff for dictée checking
+│   ├── mistakes.js         PURE: mistakes list, spaced quiz, correction parsing
 │   ├── dom.js              h() builder, autosave field, copy, download helpers
 │   └── views/
 │       ├── today.js        The session page: header, four block cards, links
 │       ├── history.js      Stats, 12-week calendar, word export, day list
-│       ├── settings.js     Backup, grammar position, preferences, storage, reset
+│       ├── settings.js     Backup, grammar position, voice, preferences, reset
+│       ├── mistakes.js     Mistakes page: quiz, add form, list
+│       ├── parts/
+│       │   ├── accent-bar.js      é è ê à ç œ « » keys for any text field
+│       │   ├── dictation-panel.js Dictée: play, type, check, log mistakes
+│       │   └── mistakes-quiz.js   Quiz over your own mistakes
 │       └── blocks/
 │           ├── anki.js       Anki links
 │           ├── listening.js  Today's pick, "Pick another", words field
@@ -89,6 +103,7 @@ French/
 │   ├── writing-prompts.json
 │   ├── pronunciation.json  Warm-up drills + audio link pattern
 │   ├── false-friends.json  EN and ES false friends
+│   ├── dictation.json      Dictée sentences with their spelling traps
 │   └── resources.json      Always-available links
 ├── tests/
 │   ├── schedule.test.js
@@ -228,8 +243,12 @@ The `focus` object depends on the day's type:
 - grammar: `grammarTopic`, `notes`, `verdict` (Thursday: `"got-it" | "again" | null`)
 - speaking: `promptId`, `drillId`, `rating` `{fluency, pronunciation, accuracy}`
   (1–5 or null), `notes`, `recordingIds`
-- writing: `promptId`, `text`, `corrections`
+- writing: `promptId`, `text`, `corrections`, `dictationIds`, `dictation`
+  (`[{id, typed, correct, total}]`)
 - review: `notes`
+
+Top-level `mistakes` holds your mistakes list:
+`{id, wrong, right, note, source, added, lastMade, count, streak, lastQuizzed, mastered}`.
 
 Rotation isn't stored: each pick goes to the least-used item, counted from
 past days whose block was ticked. `pickedOn` lets a day previewed in advance
@@ -326,6 +345,16 @@ the app working.
 
 ---
 
+### M9 · Redesign, dictée, mistakes ✅
+- Focus-mode cards, sticky session bar, serif French text, brand mark,
+  labelled 20-week calendar, curly punctuation, quieter backup reminder.
+- Dictée on writing days (32 sentences, speech synthesis, word diff).
+- Mistakes list fed by dictées and pasted Claude corrections, with a quiz on
+  the Mistakes page and in Sunday review.
+- **Done when:** a wrong dictée word appears on the Mistakes page; pasting
+  "original → correction — why" lines adds them; three correct days master a
+  mistake (all covered by tests and checked in the browser).
+
 ## 6. Risks
 
 **Risks**
@@ -352,5 +381,6 @@ the app working.
 **Not covered by automated tests**
 - Recording with a real microphone (the recorder UI, storage, starring,
   export and import were tested with a synthetic recording).
-- The timer chime (needs a human ear).
+- The timer chime and the dictée voice (need a human ear; the test browser
+  had no French voice installed).
 - Links marked `"verify": true` still need a manual check.

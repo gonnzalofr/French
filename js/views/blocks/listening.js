@@ -1,4 +1,4 @@
-import { h, extLink, autosaveField, tag } from "../../dom.js";
+import { h, extLink, autosaveField, tag, fill } from "../../dom.js";
 import { findById } from "../../content.js";
 import { parseWords, pickAnother } from "../../day.js";
 
@@ -10,7 +10,7 @@ export function listeningBlock({ content, day, state, iso, save, onCleanup }) {
 
   function paintPick() {
     const item = findById(content.podcasts.items, L.itemId);
-    pickBox.replaceChildren(
+    fill(pickBox,
       h(
         "div",
         { class: "pick-title" },

@@ -29,6 +29,17 @@ export function h(tag, attrs = {}, ...children) {
   return el;
 }
 
+/** Like el.replaceChildren(), but skips null/false and flattens arrays, like h(). */
+export function fill(el, ...children) {
+  el.replaceChildren(
+    ...children
+      .flat(Infinity)
+      .filter((c) => c != null && c !== false)
+      .map((c) => (c instanceof Node ? c : String(c))),
+  );
+  return el;
+}
+
 /** External link that opens in a new tab; shows an "unverified" tag when verify is true. */
 export function extLink(label, url, { verify = false } = {}) {
   const a = h("a", { href: url, target: "_blank", rel: "noopener noreferrer" }, label);
@@ -37,7 +48,7 @@ export function extLink(label, url, { verify = false } = {}) {
     "span",
     { class: "link-wrap" },
     a,
-    h("span", { class: "tag tag-warn", title: "Link not checked yet. Set verify:false in data/ once you've checked it." }, "unverified"),
+    h("span", { class: "tag tag-warn", title: "Link not checked yet. Set verify:false in data/ once you’ve checked it." }, "unverified"),
   );
 }
 
@@ -149,7 +160,7 @@ export function actionButton(label, action, { className = "btn", doneLabel = "Do
       ok = false;
       console.error(err);
     }
-    btn.textContent = ok ? doneLabel : "Didn't work";
+    btn.textContent = ok ? doneLabel : "Didn’t work";
     setTimeout(() => {
       btn.textContent = label;
       btn.disabled = false;

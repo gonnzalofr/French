@@ -29,7 +29,7 @@
     "",
     "Please correct the French text below:",
     "1. Give the fully corrected version.",
-    "2. List each mistake as: original → correction, with a one-line explanation in English.",
+    "2. List each mistake on its own line, exactly in this format: original → correction — one-line explanation in English. (I paste these lines into my mistakes tracker.)",
     "3. Point out anything grammatically fine but unnatural, and give a more idiomatic phrasing.",
     "4. Finish with the 3 things I should focus on next time.",
     "Keep my meaning and roughly my level; push me slightly toward B2, don't rewrite it as a native essay.",

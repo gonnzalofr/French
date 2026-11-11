@@ -1,8 +1,9 @@
-import { h, downloadFile, tag } from "../dom.js";
+import { h, downloadFile, tag, fill } from "../dom.js";
 import { topicStatus } from "../day.js";
 import { makeBackup, parseBackup } from "../storage.js";
 import { clearRecordings, exportRecordings, importRecordings, listAllRecordings, pruneRecordings } from "../recordings.js";
 import { toLocalISODate } from "../schedule.js";
+import { chooseVoice, frenchVoices, speak, speechSupported } from "../speech.js";
 
 export function renderSettings(app) {
   const { store, content, config } = app;
@@ -36,7 +37,7 @@ function backupCard(store) {
       try {
         recordings = await exportRecordings();
       } catch (err) {
-        status.textContent = `Couldn't read recordings: ${err.message}`;
+        status.textContent = `Couldn’t read recordings: ${err.message}`;
         return;
       }
     }
@@ -44,7 +45,7 @@ function backupCard(store) {
     state.settings.lastBackup = now.toISOString();
     store.save();
     downloadFile(`french-backup-${toLocalISODate(now)}.json`, JSON.stringify(makeBackup(state, recordings, now), null, 1));
-    status.textContent = `Downloaded. Move it into the project's backups/ folder (git ignores it) or anywhere safe.`;
+    status.textContent = `Downloaded. Move it into the project’s backups/ folder (git ignores it) or anywhere safe.`;
     lastLine.textContent = lastBackupText(state);
   }
 
@@ -112,12 +113,13 @@ function grammarCard(state, content, save) {
     const round = Math.floor(state.grammar.currentIndex / n) + 1;
     const status = topicStatus(state);
     note.textContent = round > 1 ? `Round ${round} through the list.` : "";
-    list.replaceChildren(
+    fill(list,
       ...topics.map((t, i) =>
         h(
           "li",
           { "data-current": i === idx },
-          h("span", {}, t.title, " "),
+          h("span", { class: "topic-num", "aria-hidden": "true" }, `${i + 1}.`),
+          h("span", { class: "topic-title" }, t.title, " "),
           tag(t.level, "tag-plain"),
           status[t.id] === "mastered" ? tag("got it", "tag-success") : status[t.id] === "again" ? tag("again", "tag-warn") : null,
           i === idx
@@ -145,7 +147,7 @@ function grammarCard(state, content, save) {
     "div",
     { class: "card" },
     h("h3", {}, "Grammar topic"),
-    h("p", { class: "muted" }, "The topic moves on when you mark Thursday's drill as “Got it”. Jump around here if you need to. Takes effect from the next grammar day."),
+    h("p", { class: "muted" }, "The topic moves on when you mark Thursday’s drill as “Got it”. Jump around here if you need to. Takes effect from the next grammar day."),
     note,
     list,
   );
@@ -162,7 +164,7 @@ function preferencesCard(state, save) {
       recStatus.textContent = `${all.length} recording${all.length === 1 ? "" : "s"} stored (${(bytes / 1048576).toFixed(1)} MB), ${all.filter((r) => r.starred).length} starred.`;
     })
     .catch(() => {
-      recStatus.textContent = "Recordings storage isn't available in this browser.";
+      recStatus.textContent = "Recordings storage isn’t available in this browser.";
     });
 
   return h(
@@ -183,6 +185,7 @@ function preferencesCard(state, save) {
       }),
       h("label", { for: "pref-chime" }, " Play a chime when a timer ends"),
     ),
+    voicePicker(s, save),
     h(
       "p",
       { class: "inline-field" },
@@ -263,7 +266,7 @@ function dangerCard(store) {
         type: "button",
         class: "btn btn-danger",
         onclick: async () => {
-          const answer = prompt('This permanently deletes everything. Type "effacer" to confirm.');
+          const answer = prompt("This permanently deletes everything. Type “effacer” to confirm.");
           if (answer?.trim().toLowerCase() !== "effacer") return;
           store.clear();
           try {
@@ -277,5 +280,41 @@ function dangerCard(store) {
       },
       "Delete all data…",
     ),
+  );
+}
+
+// ---------- dictée voice ----------
+
+function voicePicker(s, save) {
+  const select = h("select", { id: "pref-voice", disabled: true }, h("option", {}, "Loading voices…"));
+  const hint = h("p", { class: "field-hint muted" });
+  const test = h("button", { type: "button", class: "btn btn-small", disabled: true }, "Test");
+  frenchVoices().then((voices) => {
+    if (!speechSupported() || !voices.length) {
+      fill(select, h("option", {}, "No French voice found"));
+      hint.textContent = "Install one on Windows: Settings → Time & language → Speech → Add voices → Français. Then restart the browser.";
+      return;
+    }
+    const current = chooseVoice(voices, s.voice);
+    fill(select,
+      ...voices.map((v) => h("option", { value: v.name, selected: v === current }, `${v.name}${v.localService ? "" : " (online)"}`)),
+    );
+    select.disabled = false;
+    test.disabled = false;
+    hint.textContent = "Voices marked “online” need an internet connection.";
+    select.addEventListener("change", () => {
+      s.voice = select.value;
+      save();
+    });
+    test.addEventListener("click", () =>
+      speak("Bonjour ! Je lis la dictée à cette vitesse.", { voice: voices.find((v) => v.name === select.value) }),
+    );
+  });
+  return h(
+    "div",
+    { class: "field" },
+    h("label", { for: "pref-voice" }, "Dictée voice"),
+    h("div", { class: "row" }, select, test),
+    hint,
   );
 }

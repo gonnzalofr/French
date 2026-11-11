@@ -205,6 +205,10 @@ export function validateFalseFriends(f) {
   return errors;
 }
 
+export function validateDictation(d) {
+  return checkItems(d?.items, "items", ["text", "trap"]);
+}
+
 export function validateResources(r) {
   if (!Array.isArray(r?.links) || r.links.length === 0) return ["links must be a non-empty list"];
   return r.links.flatMap((l, i) => validateLink(l, `links[${i}]`));
@@ -218,6 +222,7 @@ export const CONTENT_FILES = [
   { key: "writing", file: "data/writing-prompts.json", validate: validatePrompts, needsGrammar: true },
   { key: "pronunciation", file: "data/pronunciation.json", validate: validatePronunciation },
   { key: "falseFriends", file: "data/false-friends.json", validate: validateFalseFriends },
+  { key: "dictation", file: "data/dictation.json", validate: validateDictation },
   { key: "resources", file: "data/resources.json", validate: validateResources },
 ];
 

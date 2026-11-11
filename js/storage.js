@@ -10,7 +10,8 @@ export function emptyState() {
     schemaVersion: SCHEMA_VERSION,
     days: {},
     grammar: { currentIndex: 0, log: [] },
-    settings: { chime: true, keepRecordingsDays: 14, lastBackup: null },
+    mistakes: [],
+    settings: { chime: true, keepRecordingsDays: 14, lastBackup: null, voice: null },
   };
 }
 
@@ -34,6 +35,7 @@ export function migrate(raw) {
       currentIndex: Number.isInteger(grammar.currentIndex) && grammar.currentIndex >= 0 ? grammar.currentIndex : 0,
       log: Array.isArray(grammar.log) ? grammar.log : [],
     },
+    mistakes: Array.isArray(raw.mistakes) ? raw.mistakes : [],
     settings: { ...base.settings, ...(isObject(raw.settings) ? raw.settings : {}) },
   };
 }
@@ -76,7 +78,7 @@ export function createStore(backend) {
         } catch {
           /* best effort */
         }
-        warning = `Saved progress couldn't be read (${err.message}). The app started fresh; the old data is kept in localStorage under "${keptAs}".`;
+        warning = `Saved progress couldn’t be read (${err.message}). The app started fresh; the old data is kept in localStorage under "${keptAs}".`;
         state = emptyState();
       }
       return state;
@@ -87,7 +89,7 @@ export function createStore(backend) {
         listeners.forEach((fn) => fn(state));
         return true;
       } catch (err) {
-        warning = `Couldn't save progress: ${err.message}`;
+        warning = `Couldn’t save progress: ${err.message}`;
         return false;
       }
     },
@@ -127,10 +129,10 @@ export function parseBackup(text) {
   try {
     data = JSON.parse(text);
   } catch {
-    throw new Error("That file isn't valid JSON.");
+    throw new Error("That file isn’t valid JSON.");
   }
   if (data?.app !== BACKUP_APP_ID || !isObject(data.state)) {
-    throw new Error("That file isn't a French Daily backup.");
+    throw new Error("That file isn’t a French Daily backup.");
   }
   return {
     state: migrate(data.state),

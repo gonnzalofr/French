@@ -8,7 +8,7 @@ export function ankiBlock({ config }) {
     h(
       "p",
       { class: "muted" },
-      "Clear today's due reviews first. On Sundays, add the week's new words: History → Copy words for Anki.",
+      "Clear today’s due reviews first. On Sundays, add the week’s new words: History → Copy words for Anki.",
     ),
   );
 }
